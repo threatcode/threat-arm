@@ -10,7 +10,7 @@ minimal_pkgs="ca-certificates haveged iw network-manager parted sudo wpasupplica
 # This is the list of minimal common packages
 common_min_pkgs="$minimal_pkgs apt-transport-https command-not-found \
 fontconfig ifupdown kali-defaults kali-tweaks man-db mlocate net-tools \
-netcat-traditional pciutils psmisc rfkill screen snmp snmpd tftp tmux unrar \
+netcat-traditional pciutils psmisc rfkill screen snmp snmpd tftp-hpa tmux unrar \
 usbutils vim wireless-regdb zerofree zsh zsh-autosuggestions \
 zsh-syntax-highlighting"
 
