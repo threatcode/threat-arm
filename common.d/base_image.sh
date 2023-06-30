@@ -114,6 +114,8 @@ status_stage3 'Enable SSH service'
 systemctl enable ssh
 
 status_stage3 'Allow users to use NetworkManager over SSH'
+# Ensure the localauhority directory exists before trying to install into it.
+mkdir -p /var/lib/polkit-1/localauthority
 install -m644 /bsp/polkit/10-NetworkManager.pkla /var/lib/polkit-1/localauthority/50-local.d
 
 status_stage3 'Copy script growpart'
