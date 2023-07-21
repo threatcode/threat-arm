@@ -9,15 +9,15 @@ minimal_pkgs="ca-certificates haveged iw network-manager parted sudo wpasupplica
 
 # This is the list of minimal common packages
 common_min_pkgs="$minimal_pkgs apt-transport-https command-not-found \
-fontconfig ifupdown kali-defaults kali-tweaks man-db mlocate net-tools \
-netcat-traditional pciutils psmisc rfkill screen snmp snmpd tftp-hpa tmux unrar \
+fontconfig ifupdown kali-defaults kali-tweaks man-db net-tools \
+netcat-traditional pciutils plocate psmisc rfkill screen snmp snmpd tftp-hpa tmux unrar \
 usbutils vim wireless-regdb zerofree zsh zsh-autosuggestions \
 zsh-syntax-highlighting"
 
 # This is the list of common packages
 common_pkgs="$minimal_pkgs apt-transport-https dialog \
-ifupdown inxi kali-linux-core kali-linux-firmware libnss-systemd man-db mlocate net-tools \
-network-manager pciutils psmisc rfkill screen snmp snmpd tftp-hpa \
+ifupdown inxi kali-linux-core kali-linux-firmware libnss-systemd man-db net-tools \
+network-manager pciutils plocate psmisc rfkill screen snmp snmpd tftp-hpa \
 triggerhappy usbutils whiptail zerofree"
 
 services="apache2 atftpd openvpn ssh tightvncserver"
