@@ -79,8 +79,10 @@ if [ "${desktop}" != "none" ]; then
 status_stage3 'Install desktop packages'
 eatmydata apt-get install -y ${desktop_pkgs} ${extra} || eatmydata apt-get install -y --fix-broken
 
+if [ -e /etc/lightdm/lightdm.conf ]; then
 status_stage3 'Set logind check graphical to false'
 sed -i -e 's/^#logind-check-graphical=true/logind-check-graphical=false/' /etc/lightdm/lightdm.conf
+fi
 EOF
 
 fi
