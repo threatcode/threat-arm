@@ -49,11 +49,11 @@ emit_kernel() {
   local DTOVERLAY=""
 
   echo "label kernel-$VERSION$NAME"
-  echo "    kernel /vmlinuz-$VERSION"
+  echo "    kernel /boot/vmlinuz-$VERSION"
 
   if [[ -f "/etc/kernel/cmdline" ]]; then
     if [[ -f "/boot/initrd.img-$VERSION" ]]; then
-      echo "    initrd /initrd.img-$VERSION"
+      echo "    initrd /boot/initrd.img-$VERSION"
     fi
   fi
 
@@ -64,14 +64,14 @@ emit_kernel() {
       mkdir -p /boot/dtbs
       cp -au "/usr/lib/linux-image-$VERSION" "/boot/dtbs/$VERSION"
     fi
-    echo "    devicetreedir /dtbs/$VERSION/rockchip"
+    echo "    devicetreedir /boot/dtbs/$VERSION/rockchip"
   fi
 
   if [[ -f "/boot/config.txt" ]]; then
     for DTBO in `grep "^dtoverlay=" /boot/config.txt | sed 's/dtoverlay=//g'`
     do
       if [[ -f "/boot/dtbs/$VERSION/rockchip/overlay/$DTBO.dtbo" ]]; then
-        DTOVERLAY="$DTOVERLAY /dtbs/$VERSION/rockchip/overlay/$DTBO.dtbo "
+        DTOVERLAY="$DTOVERLAY /boot/dtbs/$VERSION/rockchip/overlay/$DTBO.dtbo "
       fi
     done
     if [[ -n "$DTOVERLAY" ]]; then
