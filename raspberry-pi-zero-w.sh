@@ -44,6 +44,9 @@ install -m755 /bsp/scripts/copy-user-wpasupplicant.sh /usr/bin/
 status_stage3 'Enable copying of user wpa_supplicant.conf file'
 systemctl enable copy-user-wpasupplicant
 
+status_stage3 'Set default to cli since the system is slow and has low memory'
+systemctl set-default multi-user
+
 status_stage3 'Enabling ssh by putting ssh or ssh.txt file in /boot'
 systemctl enable enable-ssh
 
