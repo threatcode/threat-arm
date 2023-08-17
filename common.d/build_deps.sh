@@ -125,7 +125,7 @@ compilers="crossbuild-essential-arm64 crossbuild-essential-armhf crossbuild-esse
 
 libpython2_dev="libexpat1-dev libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib"
 
-dependencies="gnupg flex bison gperf build-essential zip curl libncurses5-dev zlib1g-dev \
+dependencies="gnupg flex bison gperf build-essential zip curl libncurses-dev zlib1g-dev \
 parted kpartx debootstrap pixz qemu-user-static abootimg cgpt vboot-kernel-utils vboot-utils \
 u-boot-tools bc lzma lzop automake autoconf m4 rsync schedtool git dosfstools e2fsprogs \
 device-tree-compiler libssl-dev systemd-container libgmp3-dev gawk qpdf make libfl-dev swig \
@@ -175,13 +175,13 @@ if [ $(arch) == 'x86_64' ]; then
         echo -e "\n[i] Adding x86 support"
         dpkg --add-architecture i386
         apt-wait update
-        deps="-o APT::Immediate-Configure=0 libstdc++6:i386 libc6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386"
+        deps="-o APT::Immediate-Configure=0 libstdc++6:i386 libc6:i386 libgcc1:i386 zlib1g:i386 libncurses6:i386"
         apt-wait install_deps
         del_arch_i386="dpkg --remove-architecture i386"
 
     elif [[ $(dpkg --print-foreign-architectures | grep i386) == 'i386' ]]; then
         echo -e "\n[i] Already found x86 support"
-        deps="-o APT::Immediate-Configure=0 libstdc++6:i386 libc6:i386 libgcc1:i386 zlib1g:i386 libncurses5:i386"
+        deps="-o APT::Immediate-Configure=0 libstdc++6:i386 libc6:i386 libgcc1:i386 zlib1g:i386 libncurses6:i386"
         apt-wait install_deps
 
     fi
