@@ -166,5 +166,7 @@ status_stage3 'Mask smartmontools service'
 systemctl mask smartmontools
 
 status_stage3 'Add arch to /var/lib/dpkg/arch file'
+if [[ ${architecture} == "arm64" ]]; then
 echo 'arm64' | tee /var/lib/dpkg/arch
+fi
 EOF
