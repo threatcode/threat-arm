@@ -96,6 +96,7 @@ rm ${work_dir}/boot/newport.script
 
 # reboot script
 status "Reboot script"
+mkdir -p ${work_dir}/lib/systemd/system-shutdown/
 cat <<EOF >${work_dir}/lib/systemd/system-shutdown/gsc-poweroff
 #!/usr/bin/env bash
 # use GSC to power cycle the system
