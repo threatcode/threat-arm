@@ -227,7 +227,7 @@ def generate_manifest(data):
                                     elif "raspberry-pi1" in image.get("image", default):
                                         device_arch.append(f"pi1-{arch}")
                                     elif "raspberry-pi-zero-2-w" in image.get("image", default):
-                                        device_arch.append(f"pi2-{arch}")
+                                        device_arch.append(f"pi3-{arch}")
                                     elif "raspberry-pi-zero-w" in image.get("image", default):
                                         device_arch.append(f"pi1-{arch}")
                                     else:
