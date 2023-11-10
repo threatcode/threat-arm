@@ -134,7 +134,7 @@ def yaml_parse(content):
     return yaml.safe_load(result)
 
 
-def jsonarray(devices, vendor, name, url, extract_size, extract_sha256, image_download_size, image_download_sha256):
+def jsonarray(devices, vendor, name, url, extract_size, extract_sha256, image_download_size, image_download_sha256, device_arch):
     if not vendor in devices:
         devices[vendor] = []
 
@@ -148,7 +148,9 @@ def jsonarray(devices, vendor, name, url, extract_size, extract_sha256, image_do
         "extract_size": extract_size,
         "extract_sha256": extract_sha256,
         "image_download_size": image_download_size,
-        "image_download_sha256": image_download_sha256
+        "image_download_sha256": image_download_sha256,
+        "devices": device_arch,
+        "init_format": "systemd",
     }
 
     devices[vendor].append(jsondata)
@@ -213,6 +215,26 @@ def generate_manifest(data):
 
                                     url = f"https://kali.download/arm-images/kali-{release}/{filename}.xz"
 
+                                    if "arm64" in image.get("architecture", default):
+                                        arch = "64bit"
+                                    else:
+                                        arch = "32bit"
+
+                                    device_arch = []
+
+                                    if "raspberry-pi5" in image.get("image", default):
+                                        device_arch.append(f"pi5-{arch}")
+                                    elif "raspberry-pi1" in image.get("image", default):
+                                        device_arch.append(f"pi1-{arch}")
+                                    elif "raspberry-pi-zero-2-w" in image.get("image", default):
+                                        device_arch.append(f"pi2-{arch}")
+                                    elif "raspberry-pi-zero-w" in image.get("image", default):
+                                        device_arch.append(f"pi1-{arch}")
+                                    else:
+                                        device_arch.append(f"pi4-{arch}")
+                                        device_arch.append(f"pi3-{arch}")
+                                        device_arch.append(f"pi2-{arch}")
+
                                     # @g0tmi1k: not happy about external OS, rather keep it in python (import lzma)
                                     try:
                                         unxz = subprocess.check_output(
@@ -242,7 +264,8 @@ def generate_manifest(data):
                                         extract_size,
                                         extract_sha256,
                                         image_download_size,
-                                        image_download_sha256
+                                        image_download_sha256,
+                                        device_arch,
                                         )
 
     return json.dumps(devices, indent=2)
