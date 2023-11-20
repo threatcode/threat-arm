@@ -185,6 +185,33 @@ devices:
             kernel-version: "5.10.103"
             image-notes: ""
 
+      - board: "raspberry-pi-5"
+        name: "Raspberry Pi 5"
+        cpu: "Broadcom BCM2712"
+        cpu-cores: "4"
+        gpu: "Broadcom VideoCore VII"
+        ram: "LPDDR4"
+        ram-size: ["4096", "8192"]
+        ethernet: "1"
+        ethernet-speed: "1000"
+        wifi: "2.4GHz/5GHz"
+        bluetooth: "true"
+        usb2: "2"
+        usb3: "2"
+        storage: ["sdcard", "usb"]
+        notes: ""
+        images:
+          - image: "raspberry-pi-5-arm64.img"
+            name: "Raspberry Pi 5 (64-bit)"
+            architecture: "arm64"
+            preferred-image: "false"
+            support: "kali"
+            slug: "raspberry-pi-5"
+            build-script: "raspberry-pi-5.sh"
+            kernel: "custom"
+            kernel-version: "6.1.58"
+            image-notes: ""
+
       - board: "raspberry-pi1"
         name: "Raspberry Pi 1 (Original)"
         cpu: "Broadcom BCM2835"
