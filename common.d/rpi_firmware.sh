@@ -32,6 +32,8 @@ kernel=kernel8-alt.img
 #max_framebuffers=2
 # 64-bit kernel for Raspberry Pi 4 is called kernel8l (armv8a)
 kernel=kernel8l-alt.img
+[pi5]
+kernel=kernel8.img
 [all]
 #dtoverlay=vc4-fkms-v3d
 # Tell firmware to go 64-bit mode
