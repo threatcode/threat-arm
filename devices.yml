@@ -201,15 +201,15 @@ devices:
         storage: ["sdcard", "usb"]
         notes: ""
         images:
-          - image: "raspberry-pi-5-arm64.img"
+          - image: "raspberry-pi5-arm64.img"
             name: "Raspberry Pi 5 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
             support: "kali"
             slug: "raspberry-pi-5"
-            build-script: "raspberry-pi-5.sh"
+            build-script: "raspberry-pi5.sh"
             kernel: "custom"
-            kernel-version: "6.1.58"
+            kernel-version: "6.1.63"
             image-notes: ""
 
       - board: "raspberry-pi1"
