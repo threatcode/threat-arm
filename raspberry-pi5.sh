@@ -8,7 +8,7 @@
 #
 
 # Hardware model
-hw_model=${hw_model:-"raspberry-pi-5"}
+hw_model=${hw_model:-"raspberry-pi5"}
 
 # Architecture
 architecture=${architecture:-"arm64"}
