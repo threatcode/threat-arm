@@ -132,6 +132,10 @@ make_fstab
 
 # Configure Raspberry Pi firmware (before rsync)
 include rpi_firmware
+# We need to add in a directive so that the Pi5 knows which kernel to use.
+sed -i -e '79 i [pi5]' "${work_dir}"/boot/config.txt
+sed -i -e '80 i kernel=kernel8.img' "${work_dir}"/boot/config.txt
+
 
 # Create the dirs for the partitions and mount them
 status "Create the dirs for the partitions and mount them"
