@@ -28,10 +28,12 @@ extra_custom_pkgs=""
 # This is the list of most cli based tools
 cli_tools_pkgs="kali-linux-headless"
 
-# Desktop packages to install
+# Desktop packages to install - default is specified after the desktop because
+# we want to pull in the desktop's default terminal first instead of relying on
+# something else to pull in x-terminal-emulator from the defaults.
 case $desktop in
     xfce | gnome | kde | i3 | lxde | mate | e17)
-        desktop_pkgs="kali-linux-default kali-desktop-$desktop alsa-utils \
+        desktop_pkgs="kali-desktop-$desktop kali-linux-default alsa-utils \
         xfonts-terminus xinput xserver-xorg-video-fbdev \xserver-xorg-input-libinput" ;;
 
     none | slim | miminal) 
