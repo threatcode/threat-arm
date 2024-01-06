@@ -93,7 +93,7 @@ rm build
 rm source
 ln -s /usr/src/kernel build
 ln -s /usr/src/kernel source
-cd "${base_dir}"
+cd "${repo_dir}"
 
 # Firmware needed for the wifi
 status 'Clone Wi-Fi/Bluetooth firmware'
