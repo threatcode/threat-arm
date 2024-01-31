@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Raspberry Pi Zero W (P4wnP1 A.L.O.A.) (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Raspberry Pi Zero W (P4wnP1 A.L.O.A.) (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/raspberry-pi-zero-w-p4wnp1-aloa/
+# More information: https://www.threatcode.github.io/docs/arm/raspberry-pi-zero-w-p4wnp1-aloa/
 #
 # Due to the nexmon firmware's age, there is a lack of recognizing arm64.
 # This script cannot be run on an arm64 host.
@@ -94,7 +94,7 @@ status_stage3 'Run P4wnP1 A.L.O.A installer'
 cd /root/P4wnP1
 # This is one case where we actually want the pip install to be system wide.
 sed -i -e 's/pip install/pip install --break-system-packages/' Makefile
-make installkali
+make installthreat
 
 status_stage3 'Enable dwc2 module'
 echo "dwc2" | tee -a /etc/modules
@@ -175,7 +175,7 @@ patch -p1 --no-backup-if-mismatch <"${repo_dir}"/patches/11647f99b4de6bc460e106e
 # but the debian packages (and the provided gcc) are armel
 #
 # To clean up this whole "armel" vs "armhf" mess, the kernel should be compiled with a armel toolchain (best choice would be the toolchain
-# which is used to build the kali armel packages itself, which is hopefully available for linux-x64)
+# which is used to build the threat armel packages itself, which is hopefully available for linux-x64)
 #
 # For now this is left as manual step, as the normal user shouldn't have a need to recompile kernel parts on the Pi itself
 

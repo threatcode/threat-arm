@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Trimslice (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Trimslice (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/trimslice/
+# More information: https://www.threatcode.github.io/docs/arm/trimslice/
 #
 
 # Hardware model
@@ -72,8 +72,8 @@ status "Fix root entry in extlinux.conf"
 # We do this down here because we don't know the UUID until after the image is created
 sed -i -e "0,/root=.*/s//root=UUID=$root_uuid rootfstype=$fstype console=ttyS0,115200 console=tty1 consoleblank=0 rw quiet rootwait/g" ${work_dir}/boot/extlinux/extlinux.conf
 
-# And we remove the "Debian GNU/Linux because we're Kali"
-sed -i -e "s/Debian GNU\/Linux/Kali Linux/g" ${work_dir}/boot/extlinux/extlinux.conf
+# And we remove the "Debian GNU/Linux because we're Threat"
+sed -i -e "s/Debian GNU\/Linux/Threat Linux/g" ${work_dir}/boot/extlinux/extlinux.conf
 
 status "Rsyncing rootfs into image file"
 rsync -HPavz -q ${work_dir}/ ${base_dir}/root/

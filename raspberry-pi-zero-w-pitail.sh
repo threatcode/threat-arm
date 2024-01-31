@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Raspberry Pi Zero W (Pi-Tail) (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Raspberry Pi Zero W (Pi-Tail) (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/raspberry-pi-zero-w-pi-tail/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/raspberry-pi-zero-w-pi-tail/
 #
 
 # Hardware model
@@ -24,7 +24,7 @@ basic_network
 #add_interface eth0
 
 # Download Pi-Tail files
-git clone --depth 1 https://github.com/re4son/Kali-Pi ${work_dir}/opt/Kali-Pi
+git clone --depth 1 https://github.com/re4son/Threat-Pi ${work_dir}/opt/Threat-Pi
 wget -O ${work_dir}/etc/systemd/system/pi-tail.service https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/pi-tail.service
 wget -O ${work_dir}/etc/systemd/system/pi-tailbt.service https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/pi-tailbt.service
 wget -O ${work_dir}/etc/systemd/system/pi-tailms.service https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/pi-tailms.service
@@ -45,9 +45,9 @@ wget -O ${work_dir}/boot/Pi-Tail.README https://raw.githubusercontent.com/Re4son
 wget -O ${work_dir}/boot/Pi-Tail.HOWTO https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/Pi-Tail.HOWTO
 wget -O ${work_dir}/boot/config.txt https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/config.txt
 wget -O ${work_dir}/etc/udev/rules.d/70-persistent-net.rules https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/70-persistent-net.rules
-wget -O ${work_dir}/opt/Kali-Pi/Menus/RAS-AP/dnsmasq-dhcpd.conf https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/dnsmasq-dhcpd.conf
-wget -O ${work_dir}/opt/Kali-Pi/Menus/RAS-AP/ras-ap.sh https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/ras-ap.sh
-wget -O ${work_dir}/opt/Kali-Pi/Menus/RAS-AP/ras-ap.conf https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/ras-ap.conf
+wget -O ${work_dir}/opt/Threat-Pi/Menus/RAS-AP/dnsmasq-dhcpd.conf https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/dnsmasq-dhcpd.conf
+wget -O ${work_dir}/opt/Threat-Pi/Menus/RAS-AP/ras-ap.sh https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/ras-ap.sh
+wget -O ${work_dir}/opt/Threat-Pi/Menus/RAS-AP/ras-ap.conf https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/ras-ap.conf
 wget -O ${work_dir}/usr/local/bin/mon0up https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/mon0up
 wget -O ${work_dir}/usr/local/bin/mon0down https://raw.githubusercontent.com/Re4son/RPi-Tweaks/master/pi-tail/mon0down
 wget -O ${work_dir}/lib/systemd/system/vncserver@.service https://github.com/Re4son/vncservice/raw/master/vncserver@.service
@@ -58,10 +58,10 @@ chmod 0750 ${work_dir}/etc/skel/.vnc/xstartup
 
 # Third stage
 cat <<EOF >>"${work_dir}"/third-stage
-status_stage3 'Create kali user'
-# Normally this would be done by runonce, however, because this image is special, and needs the kali home directory
+status_stage3 'Create threat user'
+# Normally this would be done by runonce, however, because this image is special, and needs the threat home directory
 # to exist before the first boot, we create it here, and remove the script that does it in the runonce stuff later.
-# Create kali user with kali password... but first, we need to manually make some groups because they don't yet exist..
+# Create threat user with threat password... but first, we need to manually make some groups because they don't yet exist..
 # This mirrors what we have on a pre-installed VM, until the script works properly to allow end users to set up their own... user
 # However we leave off floppy, because who a) still uses them, and b) attaches them to an SBC!?
 # And since a lot of these have serial devices of some sort, dialout is added as well
@@ -70,9 +70,9 @@ status_stage3 'Create kali user'
 groupadd -r bluetooth || true
 groupadd -r lpadmin || true
 groupadd -r scanner || true
-groupadd -g 1000 kali
-useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,kali -s /bin/bash kali
-echo "kali:kali" | chpasswd
+groupadd -g 1000 threat
+useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,threat -s /bin/bash threat
+echo "threat:threat" | chpasswd
 
 status_stage3 'Install PiTail packages'
 eatmydata apt-get install -y ${pitail_pkgs} || eatmydata apt-get install -y --fix-broken
@@ -85,8 +85,8 @@ install -m755 /bsp/scripts/monstart /usr/bin/
 install -m755 /bsp/scripts/monstop /usr/bin/
 
 status_stage3 'Install the kernel packages'
-echo "deb http://http.re4son-kernel.com/re4son kali-pi main" > /etc/apt/sources.list.d/re4son.list
-wget -qO /etc/apt/trusted.gpg.d/kali_pi-archive-keyring.gpg https://re4son-kernel.com/keys/http/kali_pi-archive-keyring.gpg
+echo "deb http://http.re4son-kernel.com/re4son threat-pi main" > /etc/apt/sources.list.d/re4son.list
+wget -qO /etc/apt/trusted.gpg.d/threat_pi-archive-keyring.gpg https://re4son-kernel.com/keys/http/threat_pi-archive-keyring.gpg
 eatmydata apt-get update
 eatmydata apt-get install -y ${re4son_pkgs}
 
@@ -103,7 +103,7 @@ status_stage3 'Disable haveged daemon'
 systemctl disable haveged
 
 status_stage3 'Whitelist /dev/ttyGS0 so that users can login over the gadget serial device if they enable it'
-# https://github.com/offensive-security/kali-arm-build-scripts/issues/151
+# https://github.com/offensive-security/threat-arm-build-scripts/issues/151
 echo "ttyGS0" >> /etc/securetty
 
 status_stage3 'Turn off kernel dmesg showing up in console since rpi0 only uses console'
@@ -121,13 +121,13 @@ echo "dmesg -D" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 chmod +x /etc/rc.local
 
-status_stage3 'Copy bashrc for root and kali users'
+status_stage3 'Copy bashrc for root and threat users'
 cp /etc/skel/.bashrc /root/.bashrc
-cp /etc/skel/.bashrc /home/kali/.bashrc
+cp /etc/skel/.bashrc /home/threat/.bashrc
 
-status_stage3 'Copy xstartup for root and kali users'
+status_stage3 'Copy xstartup for root and threat users'
 cp -r /etc/skel/.vnc /root/
-cp -r /etc/skel/.vnc /home/kali/
+cp -r /etc/skel/.vnc /home/threat/
 
 status_stage3 'Configure darkstat to use wlan0 by default'
 sed -i 's/^INTERFACE="-i eth0"/INTERFACE="-i wlan0"/g' "/lib/systemd/system/networking.service"
@@ -155,11 +155,11 @@ systemctl disable NetworkManager
 systemctl disable haveged
 
 status_stage3 'Set vnc password'
-echo kalikali | vncpasswd -f > /home/kali/.vnc/passwd
-chown -R kali:kali /home/kali/.vnc
-chmod 0600 /home/kali/.vnc/passwd
+echo threatthreat | vncpasswd -f > /home/threat/.vnc/passwd
+chown -R threat:threat /home/threat/.vnc
+chmod 0600 /home/threat/.vnc/passwd
 
-status_stage3 'Remove the creation of the kali user, since we do it above'
+status_stage3 'Remove the creation of the threat user, since we do it above'
 rm /etc/runonce.d/00-add-user
 
 status_stage3 'Fixup wireless-regdb signature'

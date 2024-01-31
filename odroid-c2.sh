@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for ODROID-C2 (64-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for ODROID-C2 (64-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/odroid-c2/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/odroid-c2/
 #
 
 # Hardware model
@@ -34,7 +34,7 @@ mkdir -p /etc/X11/xorg.conf.d
 cp -p /bsp/xorg/20-meson.conf /etc/X11/xorg.conf.d/
 
 status_stage3 'Install the kernel packages'
-eatmydata apt-get install -y dkms kali-sbc-amlogic linux-image-arm64
+eatmydata apt-get install -y dkms threat-sbc-amlogic linux-image-arm64
 
 # We will replace this later, via sed, to point to the correct root partition (hopefully?)
 status_stage3 'Run u-boot-update to generate the extlinux.conf file'
@@ -109,10 +109,10 @@ status "Edit the extlinux.conf file to set root uuid and proper name"
 sed -i -e "0,/root=.*/s//root=UUID=$root_uuid rootfstype=$fstype console=tty1 consoleblank=0 ro rootwait/g" ${work_dir}/boot/extlinux/extlinux.conf
 
 # And we remove the "GNU/Linux because we don't use it
-sed -i -e "s|.*GNU/Linux Rolling|menu label Kali Linux|g" ${work_dir}/boot/extlinux/extlinux.conf
+sed -i -e "s|.*GNU/Linux Rolling|menu label Threat Linux|g" ${work_dir}/boot/extlinux/extlinux.conf
 
 status "Set the default options in /etc/default/u-boot"
-echo 'U_BOOT_MENU_LABEL="Kali Linux"' >>${work_dir}/etc/default/u-boot
+echo 'U_BOOT_MENU_LABEL="Threat Linux"' >>${work_dir}/etc/default/u-boot
 echo 'U_BOOT_PARAMETERS="console=tty1 consoleblank=0 ro rootwait"' >>${work_dir}/etc/default/u-boot
 
 status "Rsyncing rootfs into image file"

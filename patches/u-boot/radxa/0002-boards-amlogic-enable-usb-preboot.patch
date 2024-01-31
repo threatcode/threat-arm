@@ -1,5 +1,5 @@
 From 7ced1d04a3cc0bfa69bd00c9fff3bc6b82702a3a Mon Sep 17 00:00:00 2001
-From: Steev Klimaszewski <steev@kali.org>
+From: Steev Klimaszewski <steev@threatcode.github.io>
 Date: Wed, 27 Apr 2022 15:05:09 -0500
 Subject: [PATCH] boards: amlogic: enable usb preboot
 

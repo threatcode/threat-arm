@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for USB Armory MKI (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for USB Armory MKI (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/usb-armory-mki/
+# More information: https://www.threatcode.github.io/docs/arm/usb-armory-mki/
 #
 
 # Hardware model
@@ -109,7 +109,7 @@ touch .scmversion
 export ARCH=arm
 export CROSS_COMPILE=arm-none-eabi-
 #patch -p1 --no-backup-if-mismatch < ${repo_dir}/patches/ARM-drop-cc-option-fallbacks-for-architecture-select.patch
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-5.15.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-5.15.patch
 patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/0001-wireless-carl9170-Enable-sniffer-mode-promisc-flag-t.patch
 wget $githubraw/f-secure-foundry/usbarmory/master/software/kernel_conf/mark-one/imx53-usbarmory-gpio.dts -O arch/arm/boot/dts/imx53-usbarmory-gpio.dts
 wget $githubraw/f-secure-foundry/usbarmory/master/software/kernel_conf/mark-one/imx53-usbarmory-host.dts -O arch/arm/boot/dts/imx53-usbarmory-host.dts

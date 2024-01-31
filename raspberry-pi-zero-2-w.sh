@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Raspberry Pi Zero 2 W (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Raspberry Pi Zero 2 W (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/raspberry-pi-zero-2-w/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/raspberry-pi-zero-2-w/
 #
 
 # Hardware model
@@ -33,8 +33,8 @@ install -m755 /bsp/scripts/monstart /usr/bin/
 install -m755 /bsp/scripts/monstop /usr/bin/
 
 status_stage3 'Install the kernel packages'
-echo "deb http://http.re4son-kernel.com/re4son kali-pi main" > /etc/apt/sources.list.d/re4son.list
-wget -O /etc/apt/trusted.gpg.d/kali_pi-archive-keyring.gpg https://re4son-kernel.com/keys/http/kali_pi-archive-keyring.gpg
+echo "deb http://http.re4son-kernel.com/re4son threat-pi main" > /etc/apt/sources.list.d/re4son.list
+wget -O /etc/apt/trusted.gpg.d/threat_pi-archive-keyring.gpg https://re4son-kernel.com/keys/http/threat_pi-archive-keyring.gpg
 eatmydata apt-get update
 eatmydata apt-get install -y ${re4son_pkgs}
 

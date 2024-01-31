@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Every Kali ARM image finishes with this
+# Every Threat ARM image finishes with this
 #
 
 # Stop on error

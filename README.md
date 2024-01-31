@@ -1,32 +1,32 @@
-## Kali-ARM Build-Scripts
-Kali Linux ARM build-scripts.
+## Threat-ARM Build-Scripts
+Threat Linux ARM build-scripts.
 
-These are the same build scripts that we use to generate the pre-generated official Kali Linux ARM images, found here: <https://www.kali.org/get-kali/>
+These are the same build scripts that we use to generate the pre-generated official Threat Linux ARM images, found here: <https://www.threatcode.github.io/get-threat/>
 
 There are additional scripts included in this repository, supporting more devices, but these will need to be built in order for them to be used.
 
-For more information, please see: <https://www.kali.org/docs/arm/>
+For more information, please see: <https://www.threatcode.github.io/docs/arm/>
 
 ---
 
 ### Building
-- These scripts are tested on Kali Linux `arm64`, `x64`, and `x86` installations only _(We **recommend x64**)_
+- These scripts are tested on Threat Linux `arm64`, `x64`, and `x86` installations only _(We **recommend x64**)_
 - Make sure you run the `./common.d/build_deps.sh` script before trying to build an image, as this installs all required dependencies.  You may need to reboot after installing the build dependencies, if you do, the script will mention it at the end.
 - You will need at **least 8GB of RAM or use SWAP file**
 
-An example workflow to build a _[Raspberry Pi 4](https://www.kali.org/docs/arm/raspberry-pi-4/) Kali Linux image_ would look like:
+An example workflow to build a _[Raspberry Pi 4](https://www.threatcode.github.io/docs/arm/raspberry-pi-4/) Threat Linux image_ would look like:
 
 ```
 $ cd ~/
-$ git clone https://gitlab.com/kalilinux/build-scripts/kali-arm
-$ cd ~/kali-arm/
+$ git clone https://github.com/threatcode/build-scripts/threat-arm
+$ cd ~/threat-arm/
 $ sudo ./common.d/build_deps.sh
 $ sudo ./raspberry-pi.sh
 ```
 
-- Depending on your system hardware & network connectivity, will depend on how long it will take to build _(4 core CPU, 8GB RAM, SSD inside a VM takes using a [local repo](https://www.kali.org/docs/community/setting-up-a-kali-linux-mirror/) about 100 minutes per script)_
-- On x64 systems, after the script finishes running, you will have an image file located in `~/kali-arm/images/` called `kali-linux-2021.3-rpi-armhf.img.xz`
-- On x86 systems, as they do not have enough RAM to compress the image, after the script finishes running, you will have an image file located in `~/kali-arm/images/` called `kali-linux-2021.3-rpi-armhf.img`
+- Depending on your system hardware & network connectivity, will depend on how long it will take to build _(4 core CPU, 8GB RAM, SSD inside a VM takes using a [local repo](https://www.threatcode.github.io/docs/community/setting-up-a-threat-linux-mirror/) about 100 minutes per script)_
+- On x64 systems, after the script finishes running, you will have an image file located in `~/threat-arm/images/` called `threat-linux-2021.3-rpi-armhf.img.xz`
+- On x86 systems, as they do not have enough RAM to compress the image, after the script finishes running, you will have an image file located in `~/threat-arm/images/` called `threat-linux-2021.3-rpi-armhf.img`
   - _Should you want to try and shrink the file to make it easier to distribute, you will need to use **your own preferred compression**_.
 
 ---
@@ -65,7 +65,7 @@ $ ./raspberry-pi.sh --help
 Changing [builder.txt](builder.txt.example) will allow for custom values, such as using a local LAN mirror:
 
 ```
-$ echo 'mirror="http://192.168.1.100/kali"' > ./builder.txt
+$ echo 'mirror="http://192.168.1.100/threat"' > ./builder.txt
 ```
 
 ---

@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Kali Linux ARM build-script for ODROID-W-DEVKIT
-# https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for ODROID-W-DEVKIT
+# https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is now at End of Life - there will be no support going forward
-# More information: https://www.kali.org/docs/arm/
+# More information: https://www.threatcode.github.io/docs/arm/
 #
 
 echo "This script is now deprecated" >&2
@@ -31,14 +31,14 @@ machine=$(
 )
 
 # Custom hostname variable
-hostname=${2:-kali}
+hostname=${2:-threat}
 
 # Custom image file name variable - MUST NOT include .img at the end.
-imagename=${3:-kali-linux-$1-owdk}
+imagename=${3:-threat-linux-$1-owdk}
 
 # Suite to use, valid options are:
-# kali-rolling, kali-dev, kali-bleeding-edge, kali-dev-only, kali-experimental, kali-last-snapshot
-suite=${suite:-"kali-rolling"}
+# threat-rolling, threat-dev, threat-bleeding-edge, threat-dev-only, threat-experimental, threat-last-snapshot
+suite=${suite:-"threat-rolling"}
 
 # Free space rootfs in MiB
 free_space="300"
@@ -53,10 +53,10 @@ compress="xz"
 fstype="ext3"
 
 # If you have your own preferred mirrors, set them here.
-mirror=${mirror:-"http://http.kali.org/kali"}
+mirror=${mirror:-"http://threatcode.github.io/threat"}
 
-# Gitlab URL Kali repository
-kaligit="https://gitlab.com/kalilinux"
+# Gitlab URL Threat repository
+threatgit="https://github.com/threatcode"
 
 # Github raw URL
 githubraw="https://raw.githubusercontent.com"
@@ -64,7 +64,7 @@ githubraw="https://raw.githubusercontent.com"
 # Check EUID=0 you can run any binary as root.
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root or have super user permissions"
-    echo "Use: sudo $0 ${1:-2.0} ${2:-kali}"
+    echo "Use: sudo $0 ${1:-2.0} ${2:-threat}"
 
     exit 1
 
@@ -72,7 +72,7 @@ fi
 
 # Pass version number
 if [[ $# -eq 0 ]]; then
-    echo "Please pass version number, e.g. $0 2.0, and (if you want) a hostname, default is kali"
+    echo "Please pass version number, e.g. $0 2.0, and (if you want) a hostname, default is threat"
 
     exit 0
 
@@ -81,7 +81,7 @@ fi
 # Check exist bsp directory.
 if [ ! -e "bsp" ]; then
     echo "Error: missing bsp directory structure"
-    echo "Please clone the full repository ${kaligit}/build-scripts/kali-arm"
+    echo "Please clone the full repository ${threatgit}/build-scripts/threat-arm"
 
     exit 255
 
@@ -94,7 +94,7 @@ repo_dir="$(pwd)"
 basedir=${repo_dir}/owdk-"$1"
 
 # Working directory
-work_dir="${basedir}/kali-${architecture}"
+work_dir="${basedir}/threat-${architecture}"
 
 # Check directory build
 if [ -e "${basedir}" ]; then
@@ -119,11 +119,11 @@ arm="abootimg cgpt fake-hwclock ntpdate u-boot-tools vboot-kernel-utils \
 vboot-utils"
 
 base="apt-utils e2fsprogs firmware-atheros firmware-libertas firmware-linux \
-firmware-realtek ifupdown initramfs-tools kali-defaults kali-defaults \
-kali-menu parted sudo usbutils"
+firmware-realtek ifupdown initramfs-tools threat-defaults threat-defaults \
+threat-menu parted sudo usbutils"
 
 desktop="fonts-croscore fonts-crosextra-caladea fonts-crosextra-carlito \
-kali-desktop-xfce kali-menu kali-root-login lightdm network-manager \
+threat-desktop-xfce threat-menu threat-root-login lightdm network-manager \
 network-manager-gnome xfce4 xserver-xorg-video-fbdev"
 
 tools="aircrack-ng ethtool hydra john libnfc-bin mfoc nmap passing-the-hash \
@@ -180,8 +180,8 @@ elif [[ "${architecture}" == "armel" ]]; then
 fi
 
 # create the rootfs - not much to modify here, except maybe throw in some more packages if you want.
-eatmydata debootstrap --foreign --keyring=/usr/share/keyrings/kali-archive-keyring.gpg \
-    --include=kali-archive-keyring,eatmydata --components=${components} \--arch ${architecture} ${suite} ${work_dir} http://http.kali.org/kali
+eatmydata debootstrap --foreign --keyring=/usr/share/keyrings/threat-archive-keyring.gpg \
+    --include=threat-archive-keyring,eatmydata --components=${components} \--arch ${architecture} ${suite} ${work_dir} http://threatcode.github.io/threat
 
 # systemd-nspawn enviroment
 systemd-nspawn_exec() {
@@ -229,7 +229,7 @@ EOF
 # Set hostname
 echo "${hostname}" >${work_dir}/etc/hostname
 
-# So X doesn't complain, we add kali to hosts
+# So X doesn't complain, we add threat to hosts
 cat <<EOF >${work_dir}/etc/hosts
 127.0.0.1       ${hostname}    localhost
 ::1             localhost ip6-localhost ip6-loopback
@@ -277,7 +277,7 @@ eatmydata apt-get update
 
 eatmydata apt-get -y install binutils ca-certificates console-common git initramfs-tools less locales nano u-boot-tools
 
-# Create kali user with kali password... but first, we need to manually make some groups because they don't yet exist...
+# Create threat user with threat password... but first, we need to manually make some groups because they don't yet exist...
 # This mirrors what we have on a pre-installed VM, until the script works properly to allow end users to set up their own... user.
 # However we leave off floppy, because who a) still uses them, and b) attaches them to an SBC!?
 # And since a lot of these have serial devices of some sort, dialout is added as well.
@@ -286,10 +286,10 @@ eatmydata apt-get -y install binutils ca-certificates console-common git initram
 groupadd -r -g 118 bluetooth
 groupadd -r -g 113 lpadmin
 groupadd -r -g 122 scanner
-groupadd -g 1000 kali
+groupadd -g 1000 threat
 
-useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,kali -s /bin/bash kali
-echo "kali:kali" | chpasswd
+useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,threat -s /bin/bash threat
+echo "threat:threat" | chpasswd
 
 aptops="--allow-change-held-packages -o dpkg::options::=--force-confnew -o Acquire::Retries=3"
 
@@ -312,18 +312,18 @@ cp -p /bsp/services/all/*.service /etc/systemd/system/
 cp -p /bsp/services/rpi/*.service /etc/systemd/system/
 
 # Re4son's rpi-tft configurator
-wget -q ${githubraw}/Re4son/RPi-Tweaks/master/kalipi-tft-config/kalipi-tft-config -O /usr/bin/kalipi-tft-config
-chmod 755 /usr/bin/kalipi-tft-config
+wget -q ${githubraw}/Re4son/RPi-Tweaks/master/threatpi-tft-config/threatpi-tft-config -O /usr/bin/threatpi-tft-config
+chmod 755 /usr/bin/threatpi-tft-config
 
 # Script mode wlan monitor START/STOP
 install -m755 /bsp/scripts/monstart /usr/bin/
 install -m755 /bsp/scripts/monstop /usr/bin/
 
 # Install the kernel packages
-echo "deb http://http.re4son-kernel.com/re4son kali-pi main" > /etc/apt/sources.list.d/re4son.list
+echo "deb http://http.re4son-kernel.com/re4son threat-pi main" > /etc/apt/sources.list.d/re4son.list
 wget -qO- https://re4son-kernel.com/keys/http/archive-key.asc | apt-key add - > /dev/null 2>&1
 eatmydata apt-get update
-eatmydata apt-get install -y \$aptops kalipi-kernel kalipi-bootloader kalipi-re4son-firmware kalipi-kernel-headers
+eatmydata apt-get install -y \$aptops threatpi-kernel threatpi-bootloader threatpi-re4son-firmware threatpi-kernel-headers
 
 # Regenerated the shared-mime-info database on the first boot
 # since it fails to do so properly in a chroot.

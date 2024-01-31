@@ -59,7 +59,7 @@ function usage() {
     # Minimal image - no desktop manager (alias to --desktop=none)
     $0 --minimal or $0 -m
 
-    # Slim image - no desktop manager & no Kali tools
+    # Slim image - no desktop manager & no Threat tools
     $0 --slim or $0 -s
 
     # Enable debug & log file (./logs/<file>.log)
@@ -194,10 +194,10 @@ function debootstrap_exec() {
     status " debootstrap ${suite} $*"
 
     if [ "$(lsb_release -sc)" == "bullseye" ]; then
-    eatmydata debootstrap --merged-usr --keyring=/usr/share/keyrings/kali-archive-keyring.gpg --components="${components}" \
+    eatmydata debootstrap --merged-usr --keyring=/usr/share/keyrings/threat-archive-keyring.gpg --components="${components}" \
         --include="${debootstrap_base}" --arch "${architecture}" "${suite}" "${work_dir}" "$@"
     else
-    eatmydata mmdebstrap --keyring=/usr/share/keyrings/kali-archive-keyring.gpg --components="${components}" \
+    eatmydata mmdebstrap --keyring=/usr/share/keyrings/threat-archive-keyring.gpg --components="${components}" \
         --include="${debootstrap_base}" --arch "${architecture}" "${suite}" "${work_dir}" "$@"
     fi
 }
@@ -227,13 +227,13 @@ function restore_mirror() {
 
     log "Mirror & suite replacement" gray
 
-    # For now, restore_mirror will put the default kali mirror in, fix after 2021.3
+    # For now, restore_mirror will put the default threat mirror in, fix after 2021.3
     cat <<EOF >"${work_dir}"/etc/apt/sources.list
-# See https://www.kali.org/docs/general-use/kali-linux-sources-list-repositories/
-deb http://http.kali.org/kali kali-rolling main contrib non-free non-free-firmware
+# See https://www.threatcode.github.io/docs/general-use/threat-linux-sources-list-repositories/
+deb http://threatcode.github.io/threat threat-rolling main contrib non-free non-free-firmware
 
 # Additional line for source packages
-# deb-src http://http.kali.org/kali kali-rolling main contrib non-free non-free-firmware
+# deb-src http://threatcode.github.io/threat threat-rolling main contrib non-free non-free-firmware
 EOF
 }
 
@@ -339,8 +339,8 @@ function set_hostname() {
 
     else
         log "$1 is not a correct hostname" red
-        log "Using kali to default hostname" bold
-        echo "kali" >"${work_dir}"/etc/hostname
+        log "Using threat to default hostname" bold
+        echo "threat" >"${work_dir}"/etc/hostname
 
     fi
 }

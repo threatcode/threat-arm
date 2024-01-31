@@ -862,16 +862,16 @@ index e0f97cf6d273..15146979e59b 100644
  
 -static int brcmf_keepalive_start(struct brcmf_if *ifp, unsigned int interval)
 -{
--	struct brcmf_mkeep_alive_pkt_le kalive = {0};
+-	struct brcmf_mkeep_alive_pkt_le threatve = {0};
 -	int ret = 0;
 -
 -	/* Configure Null function/data keepalive */
--	kalive.version = cpu_to_le16(1);
--	kalive.period_msec = cpu_to_le32(interval * MSEC_PER_SEC);
--	kalive.len_bytes = cpu_to_le16(0);
--	kalive.keep_alive_id = 0;
+-	threatve.version = cpu_to_le16(1);
+-	threatve.period_msec = cpu_to_le32(interval * MSEC_PER_SEC);
+-	threatve.len_bytes = cpu_to_le16(0);
+-	threatve.keep_alive_id = 0;
 -
--	ret = brcmf_fil_iovar_data_set(ifp, "mkeep_alive", &kalive, sizeof(kalive));
+-	ret = brcmf_fil_iovar_data_set(ifp, "mkeep_alive", &threatve, sizeof(threatve));
 -	if (ret)
 -		brcmf_err("keep-alive packet config failed, ret=%d\n", ret);
 -

@@ -1,5 +1,5 @@
 From dddc052b14d3dc1f2f4b13cb49e6370a09a8d0c1 Mon Sep 17 00:00:00 2001
-From: Steev Klimaszewski <steev@kali.org>
+From: Steev Klimaszewski <steev@threatcode.github.io>
 Date: Thu, 2 Dec 2021 18:02:20 -0600
 Subject: [PATCH 17/17] HACK: remove shutdown callback to fix reboot
 

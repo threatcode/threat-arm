@@ -1,8 +1,8 @@
-# Version Kali release
+# Version Threat release
 #version=${version:-$(cat .release)}
 
 # Custom hostname variable
-#hostname=kali
+#hostname=threat
 
 # Choose a locale
 #locale="en_US.UTF-8"
@@ -37,20 +37,20 @@
 #cpu_limit="85"
 
 # If you have your own preferred mirrors, set them here.
-#mirror="http://http.kali.org/kali"
-#replace_mirror="http://http.kali.org/kali"
+#mirror="http://threatcode.github.io/threat"
+#replace_mirror="http://threatcode.github.io/threat"
 
 # Use packages from the listed components of the archive.
 #components="main,contrib,non-free,non-free-firmware"
 
 # Suite to use, valid options are:
-# kali-rolling, kali-dev, kali-dev-only, kali-last-snapshot
-#suite="kali-rolling"
-#replace_suite="kali-rolling"
+# threat-rolling, threat-dev, threat-dev-only, threat-last-snapshot
+#suite="threat-rolling"
+#replace_suite="threat-rolling"
 
 # Default file name
 # On the RPi 3 script, this would result in
-# "kali-linux-202X-WXX-rpi4-nexmon-arm64" for the default filename.
-# For release builds from Kali, the requirements are that it start with kali-linuxi
+# "threat-linux-202X-WXX-rpi4-nexmon-arm64" for the default filename.
+# For release builds from Threat, the requirements are that it start with threat-linuxi
 # and end with the architecture.
-#image_name="kali-linux-$(date +%Y)-W$(date +%U)-${hw_model}-${variant}"
+#image_name="threat-linux-$(date +%Y)-W$(date +%U)-${hw_model}-${variant}"

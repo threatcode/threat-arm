@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Kali Linux ARM build-script for EfikaMX
-# https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for EfikaMX
+# https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is now at End of Life - there will be no support going forward
-# More information: https://www.kali.org/docs/arm/efikamx/
+# More information: https://www.threatcode.github.io/docs/arm/efikamx/
 #
 
 echo "This script is now deprecated" >&2
@@ -29,10 +29,10 @@ fi
 basedir=$(pwd)/efikamx-$1
 
 # Custom hostname variable
-hostname=${2:-kali}
+hostname=${2:-threat}
 
 # Custom image file name variable - MUST NOT include .img at the end.
-imagename=${3:-kali-linux-$1-efikamx}
+imagename=${3:-threat-linux-$1-efikamx}
 
 # Size of image in megabytes (Default is 7000=7GB)
 size=7000
@@ -54,17 +54,17 @@ fi
 unset CROSS_COMPILE
 
 # Package installations for various sections.
-# This will build a minimal XFCE Kali system with the top 10 tools.
+# This will build a minimal XFCE Threat system with the top 10 tools.
 # This is the section to edit if you would like to add more packages.
-# See http://www.kali.org/new/kali-linux-metapackages/ for meta packages you can
+# See http://www.threatcode.github.io/new/threat-linux-metapackages/ for meta packages you can
 # use. You can also install packages, using just the package name, but keep in
 # mind that not all packages work on ARM! If you specify one of those, the
 # script will throw an error, but will still continue on, and create an unusable
 # image, keep that in mind.
 
 arm="abootimg cgpt fake-hwclock ntpdate vboot-utils vboot-kernel-utils uboot-mkimage"
-base="kali-defaults ifupdown initramfs-tools usbutils firmware-linux firmware-atheros firmware-libertas firmware-realtek"
-desktop="kali-menu xfce4 network-manager network-manager-gnome xserver-xorg-video-fbdev"
+base="threat-defaults ifupdown initramfs-tools usbutils firmware-linux firmware-atheros firmware-libertas firmware-realtek"
+desktop="threat-menu xfce4 network-manager network-manager-gnome xserver-xorg-video-fbdev"
 tools="passing-the-hash winexe aircrack-ng hydra john sqlmap wireshark libnfc-bin mfoc"
 services="openssh-server apache2"
 extras="iceweasel wpasupplicant"
@@ -73,11 +73,11 @@ export packages="${arm} ${base} ${services} ${extras}"
 export architecture="armhf"
 
 # If you have your own preferred mirrors, set them here.
-# You may want to leave security.kali.org alone, but if you trust your local
+# You may want to leave security.threatcode.github.io alone, but if you trust your local
 # mirror, feel free to change this as well.
 # After generating the rootfs, we set the sources.list to the default settings.
-export mirror=old.kali.org
-export security=security.kali.org
+export mirror=old.threatcode.github.io
+export security=security.threatcode.github.io
 
 # Set this to use an http proxy, like apt-cacher-ng, and uncomment further down
 # to unset it.
@@ -87,22 +87,22 @@ mkdir -p "${basedir}"
 cd "${basedir}"
 
 # create the rootfs - not much to modify here, except maybe throw in some more packages if you want.
-debootstrap --foreign --keyring=/usr/share/keyrings/kali-archive-keyring.gpg --include=kali-archive-keyring --arch ${architecture} kali-rolling kali-${architecture} http://${mirror}/kali
+debootstrap --foreign --keyring=/usr/share/keyrings/threat-archive-keyring.gpg --include=threat-archive-keyring --arch ${architecture} threat-rolling threat-${architecture} http://${mirror}/threat
 
-cp /usr/bin/qemu-arm-static kali-${architecture}/usr/bin/
+cp /usr/bin/qemu-arm-static threat-${architecture}/usr/bin/
 
-LANG=C systemd-nspawn -M ${machine} -D kali-${architecture} /debootstrap/debootstrap --second-stage
+LANG=C systemd-nspawn -M ${machine} -D threat-${architecture} /debootstrap/debootstrap --second-stage
 
-mkdir -p kali-${architecture}/etc/apt/
+mkdir -p threat-${architecture}/etc/apt/
 
-cat <<EOF >kali-${architecture}/etc/apt/sources.list
-deb http://${mirror}/kali moto main contrib non-free
+cat <<EOF >threat-${architecture}/etc/apt/sources.list
+deb http://${mirror}/threat moto main contrib non-free
 EOF
 
-echo "${hostname}" >kali-${architecture}/etc/hostname
+echo "${hostname}" >threat-${architecture}/etc/hostname
 
-# So X doesn't complain, we add kali to hosts
-cat <<EOF >kali-${architecture}/etc/hosts
+# So X doesn't complain, we add threat to hosts
+cat <<EOF >threat-${architecture}/etc/hosts
 127.0.0.1       ${hostname}    localhost
 ::1             localhost ip6-localhost ip6-loopback
 fe00::0         ip6-localnet
@@ -111,9 +111,9 @@ ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
 EOF
 
-mkdir -p kali-${architecture}/etc/network/
+mkdir -p threat-${architecture}/etc/network/
 
-cat <<EOF >kali-${architecture}/etc/network/interfaces
+cat <<EOF >threat-${architecture}/etc/network/interfaces
 auto lo
 iface lo inet loopback
 
@@ -121,7 +121,7 @@ auto eth0
 iface eth0 inet dhcp
 EOF
 
-cat <<EOF >kali-${architecture}/etc/resolv.conf
+cat <<EOF >threat-${architecture}/etc/resolv.conf
 nameserver 8.8.8.8
 EOF
 
@@ -129,16 +129,16 @@ export MALLOC_CHECK_=0 # workaround for LP: #520465
 export LC_ALL=C
 export DEBIAN_FRONTEND=noninteractive
 
-#mount -t proc proc kali-${architecture}/proc
-#mount -o bind /dev/ kali-${architecture}/dev/
-#mount -o bind /dev/pts kali-${architecture}/dev/pts
+#mount -t proc proc threat-${architecture}/proc
+#mount -o bind /dev/ threat-${architecture}/dev/
+#mount -o bind /dev/pts threat-${architecture}/dev/pts
 
-cat <<EOF >kali-${architecture}/debconf.set
+cat <<EOF >threat-${architecture}/debconf.set
 console-common console-data/keymap/policy select Select keymap from full list
 console-common console-data/keymap/full select en-latin1-nodeadkeys
 EOF
 
-cat <<EOF >kali-${architecture}/third-stage
+cat <<EOF >threat-${architecture}/third-stage
 #!/bin/bash
 set -e
 dpkg-divert --add --local --divert /usr/sbin/invoke-rc.d.chroot --rename /usr/sbin/invoke-rc.d
@@ -175,11 +175,11 @@ dpkg-divert --remove --rename /usr/sbin/invoke-rc.d
 rm -f /third-stage
 EOF
 
-chmod 755 kali-${architecture}/third-stage
+chmod 755 threat-${architecture}/third-stage
 
-LANG=C systemd-nspawn -M ${machine} -D kali-${architecture} /third-stage
+LANG=C systemd-nspawn -M ${machine} -D threat-${architecture} /third-stage
 
-cat <<EOF >kali-${architecture}/cleanup
+cat <<EOF >threat-${architecture}/cleanup
 #!/bin/bash
 rm -rf /root/.bash_history
 apt-get update
@@ -192,14 +192,14 @@ rm -f cleanup
 rm -f /usr/bin/qemu*
 EOF
 
-chmod 755 kali-${architecture}/cleanup
+chmod 755 threat-${architecture}/cleanup
 
-LANG=C systemd-nspawn -M ${machine} -D kali-${architecture} /cleanup
+LANG=C systemd-nspawn -M ${machine} -D threat-${architecture} /cleanup
 
-#umount kali-${architecture}/proc/sys/fs/binfmt_misc
-#umount kali-${architecture}/dev/pts
-#umount kali-${architecture}/dev/
-#umount kali-${architecture}/proc
+#umount threat-${architecture}/proc/sys/fs/binfmt_misc
+#umount threat-${architecture}/dev/pts
+#umount threat-${architecture}/dev/
+#umount threat-${architecture}/proc
 
 # For serial console you can use one of the following two items.
 # (No auto login)
@@ -207,24 +207,24 @@ LANG=C systemd-nspawn -M ${machine} -D kali-${architecture} /cleanup
 # (Auto login on serial console)
 #T1:12345:respawn:/bin/login -f root ttymxc0 /dev/ttymxc0 2>&1
 echo 'T1:12345:respawn:/sbin/agetty 115200 ttymxc0 vt100' >> \
-    "${basedir}"/kali-${architecture}/etc/inittab
+    "${basedir}"/threat-${architecture}/etc/inittab
 
-cat <<EOF >>"${basedir}"/kali-${architecture}/etc/udev/links.conf
+cat <<EOF >>"${basedir}"/threat-${architecture}/etc/udev/links.conf
 M   ttymxc0 c 5 1
 EOF
 
-cat <<EOF >>"${basedir}"/kali-${architecture}/etc/securetty
+cat <<EOF >>"${basedir}"/threat-${architecture}/etc/securetty
 ttymxc0
 EOF
 
 # Currently we use a 2.6.31 kernel, it's patched so udev will work, but Debian's
 # udev doesn't know that.  So we yank this line out of the init script otherwise
 # udev won't start and we have no devices, including keyboard/usb support.
-sed -i -e "s/2.6.3\[0-1\]/2.6.30/g" "${basedir}"/kali-${architecture}/etc/init.d/udev
+sed -i -e "s/2.6.3\[0-1\]/2.6.30/g" "${basedir}"/threat-${architecture}/etc/init.d/udev
 
-cat <<EOF >"${basedir}"/kali-${architecture}/etc/apt/sources.list
-deb http://old.kali.org/kali moto main non-free contrib
-deb-src http://old.kali.org/kali moto main non-free contrib
+cat <<EOF >"${basedir}"/threat-${architecture}/etc/apt/sources.list
+deb http://old.threatcode.github.io/threat moto main non-free contrib
+deb-src http://old.threatcode.github.io/threat moto main non-free contrib
 EOF
 
 # Uncomment this if you use apt-cacher-ng otherwise git clones will fail.
@@ -232,9 +232,9 @@ EOF
 
 # Kernel section. If you want to use a custom kernel, or configuration, replace
 # them in this section.
-git clone --depth 1 https://github.com/genesi/linux-legacy "${basedir}"/kali-${architecture}/usr/src/kernel
+git clone --depth 1 https://github.com/genesi/linux-legacy "${basedir}"/threat-${architecture}/usr/src/kernel
 
-cd "${basedir}"/kali-${architecture}/usr/src/kernel
+cd "${basedir}"/threat-${architecture}/usr/src/kernel
 
 touch .scmversion
 
@@ -245,14 +245,14 @@ patch -p1 --no-backup-if-mismatch <"${basedir}"/../patches/mac80211.patch
 
 make mx51_efikamx_defconfig
 make -j $(grep -c processor /proc/cpuinfo) uImage modules
-make modules_install INSTALL_MOD_PATH="${basedir}"/kali-${architecture}
+make modules_install INSTALL_MOD_PATH="${basedir}"/threat-${architecture}
 
-cp arch/arm/boot/uImage "${basedir}"/kali-${architecture}/boot
+cp arch/arm/boot/uImage "${basedir}"/threat-${architecture}/boot
 
 cd "${basedir}"
 
 # Create boot.txt file
-cat <<EOF >"${basedir}"/kali-${architecture}/boot/boot.script
+cat <<EOF >"${basedir}"/threat-${architecture}/boot/boot.script
 setenv ramdisk uInitrd;
 setenv kernel uImage;
 setenv bootargs console=tty1 root=/dev/mmcblk0p2 rootwait rootfstype=ext3 rw quiet;
@@ -268,7 +268,7 @@ fi;
 EOF
 
 # Create u-boot boot script image
-mkimage -A arm -T script -C none -d "${basedir}"/kali-${architecture}/boot/boot.script "${basedir}"/kali-${architecture}/boot/boot.scr
+mkimage -A arm -T script -C none -d "${basedir}"/threat-${architecture}/boot/boot.script "${basedir}"/threat-${architecture}/boot/boot.scr
 
 cd "${basedir}"
 
@@ -305,12 +305,12 @@ mkdir -p "${basedir}"/root/boot
 mount ${bootp} "${basedir}"/root/boot
 
 # We do this down here to get rid of the build system's resolv.conf after running through the build.
-cat <<EOF >kali-${architecture}/etc/resolv.conf
+cat <<EOF >threat-${architecture}/etc/resolv.conf
 nameserver 8.8.8.8
 EOF
 
 echo "Rsyncing rootfs into image file"
-rsync -HPavz -q "${basedir}"/kali-${architecture}/ "${basedir}"/root/
+rsync -HPavz -q "${basedir}"/threat-${architecture}/ "${basedir}"/root/
 
 # Unmount partitions
 sync

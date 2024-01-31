@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# REF: https://www.kali.org/docs/arm/
+# REF: https://www.threatcode.github.io/docs/arm/
 
 import sys
 from datetime import datetime
@@ -10,12 +10,12 @@ OUTPUT_FILE = "./image-overview.md"
 INPUT_FILE = "./devices.yml"
 
 repo_msg = f"""
-_This table was [generated automatically](https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Kali ARM GitLab repository](https://gitlab.com/kalilinux/build-scripts/kali-arm)_
+_This table was [generated automatically](https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Threat ARM GitLab repository](https://github.com/threatcode/build-scripts/threat-arm)_
 """
 
 qty_devices = 0
 qty_images = 0
-qty_image_kali = 0
+qty_image_threat = 0
 qty_image_community = 0
 qty_image_eol = 0
 qty_image_unknown = 0
@@ -23,7 +23,7 @@ qty_image_unknown = 0
 # Input:
 # ------------------------------------------------------------
 # See: ./devices.yml
-# https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 
 def yaml_parse(content):
@@ -38,13 +38,13 @@ def yaml_parse(content):
 
 
 def generate_table(data):
-    global qty_devices, qty_images, qty_image_kali, qty_image_community, qty_image_eol, qty_image_unknown
+    global qty_devices, qty_images, qty_image_threat, qty_image_community, qty_image_eol, qty_image_unknown
 
     images = []
 
     default = ""
 
-    table = "| [Device Name](https://www.kali.org/docs/arm/) | [Build-Script](https://gitlab.com/kalilinux/build-scripts/kali-arm/) | [Official Image](https://www.kali.org/get-kali/#kali-arm) | Community Image | EOL/Retired Image |\n"
+    table = "| [Device Name](https://www.threatcode.github.io/docs/arm/) | [Build-Script](https://github.com/threatcode/build-scripts/threat-arm/) | [Official Image](https://www.threatcode.github.io/get-threat/#threat-arm) | Community Image | EOL/Retired Image |\n"
     table += "|---------------|--------------|----------------|-----------------|---------------|\n"
 
     # Iterate over per input (depth 1)
@@ -73,19 +73,19 @@ def generate_table(data):
                                 )
 
                                 if build_script:
-                                    build_script = f"[{build_script}](https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/{build_script})"
+                                    build_script = f"[{build_script}](https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/{build_script})"
 
                                 name = image.get("name", default)
                                 slug = image.get("slug", default)
 
                                 if name and slug:
-                                    name = f"[{name}](https://www.kali.org/docs/arm/{slug}/)"
+                                    name = f"[{name}](https://www.threatcode.github.io/docs/arm/{slug}/)"
 
                                 support = image.get("support", default)
 
-                                if support == "kali":
+                                if support == "threat":
                                     status = "x |  | "
-                                    qty_image_kali += 1
+                                    qty_image_threat += 1
 
                                 elif support == "community":
                                     status = " | x | "
@@ -125,12 +125,12 @@ def write_file(data, file):
     try:
         with open(file, "w") as f:
             meta = "---\n"
-            meta += "title: Kali ARM Image Overview\n"
+            meta += "title: Threat ARM Image Overview\n"
             meta += "---\n\n"
 
-            stats = f"- The official [Kali ARM repository](https://gitlab.com/kalilinux/build-scripts/kali-arm) contains [build-scripts]((https://gitlab.com/kalilinux/build-scripts/kali-arm)) to create [**{qty_images}** unique Kali ARM images](image-stats.html) for **{qty_devices}** devices\n"
-            stats += f"- The [next release](https://www.kali.org/releases/) cycle will include [**{qty_image_kali}** Kali ARM images](image-stats.html) _([ready to download](https://www.kali.org/get-kali/#kali-arm))_, **{qty_image_community}** images which can be [built](https://gitlab.com/kalilinux/build-scripts/kali-arm), and {qty_image_eol} retired images\n"
-            stats += "- [Kali ARM Statistics](index.html)\n\n"
+            stats = f"- The official [Threat ARM repository](https://github.com/threatcode/build-scripts/threat-arm) contains [build-scripts]((https://github.com/threatcode/build-scripts/threat-arm)) to create [**{qty_images}** unique Threat ARM images](image-stats.html) for **{qty_devices}** devices\n"
+            stats += f"- The [next release](https://www.threatcode.github.io/releases/) cycle will include [**{qty_image_threat}** Threat ARM images](image-stats.html) _([ready to download](https://www.threatcode.github.io/get-threat/#threat-arm))_, **{qty_image_community}** images which can be [built](https://github.com/threatcode/build-scripts/threat-arm), and {qty_image_eol} retired images\n"
+            stats += "- [Threat ARM Statistics](index.html)\n\n"
 
             f.write(str(meta))
             f.write(str(stats))
@@ -148,7 +148,7 @@ def write_file(data, file):
 def print_summary():
     print(f"Devices: {qty_devices}")
     print(f"Images : {qty_images}")
-    print(f"- Kali     : {qty_image_kali}")
+    print(f"- Threat     : {qty_image_threat}")
     print(f"- Community: {qty_image_community}")
     print(f"- EOL      : {qty_image_eol}")
     print(f"- Unknown  : {qty_image_unknown}")

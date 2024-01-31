@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for BeagleBone Black (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for BeagleBone Black (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/beaglebone-black/
+# More information: https://www.threatcode.github.io/docs/arm/beaglebone-black/
 #
 
 # Hardware model
@@ -60,7 +60,7 @@ export ARCH=arm
 # Edit the CROSS_COMPILE variable as needed
 export CROSS_COMPILE=arm-linux-gnueabihf-
 touch .scmversion
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-4.14.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-4.14.patch
 patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/0001-wireless-carl9170-Enable-sniffer-mode-promisc-flag-t.patch
 make bb.org_defconfig
 make -j $(grep -c processor /proc/cpuinfo)
