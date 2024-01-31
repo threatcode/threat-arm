@@ -29,7 +29,7 @@ jobs:
         run: |
           pip install -r docs/requirements.txt
           apt-get update
-          apt-get --yes --no-install-recommends install pandoc
+          apt-get --yes --no-install-recommends install yamllint pandoc
 
       - name: Linting
         run: yamllint devices.yml
@@ -53,7 +53,7 @@ jobs:
         run: pip install -r docs/requirements.txt
 
       - name: Setup for HTML
-        run: apt-get update && apt-get --yes --no-install-recommends install install pandoc
+        run: apt-get update && apt-get --yes --no-install-recommends install pandoc
 
       - name: Generate Documentation
         run: |
@@ -74,9 +74,6 @@ jobs:
           pandoc --standalone ./images.md         --css=public.css --include-in-header=./docs/header.html --output=./public/images.html
           pandoc --standalone ./kernel-stats.md   --css=public.css --include-in-header=./docs/header.html --output=./public/kernel-stats.html
           find public/ -type f -name '*.html' | sort | while read -r x; do sed 's_<table>_<table id="pretty">_' "${x}" > /tmp/out; mv /tmp/out "${x}"; done
-
-      - name: Display Mirror Result
-        run: echo "Mirror Action Result: ${{ steps.mirror.outputs.result }}"
 
       - name: Publish Documentation
         uses: actions/upload-artifact@v2
