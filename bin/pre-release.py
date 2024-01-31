@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-# NetHunter ~ https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-project/-/blob/2e26ee29/nethunter-installer/prep-release.py
-# ARM Devices ~ https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# NetHunter ~ https://github.com/threatcode/nethunter/build-scripts/threat-nethunter-project/-/blob/2e26ee29/nethunter-installer/prep-release.py
+# ARM Devices ~ https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 ###############################################
-# Script to prepare Kali ARM quarterly release
+# Script to prepare Threat ARM quarterly release
 #
 # This should be run either before or after images are created.
 #
@@ -44,7 +44,7 @@ qty_release_images = 0
 # Input:
 # ------------------------------------------------------------
 # See: ./devices.yml
-# https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 
 def bail(message="", strerror=""):
@@ -165,7 +165,7 @@ def generate_manifest(data):
                             qty_images += 1
 
                             # Check that it's not EOL or community supported
-                            if image.get("support") == "kali":
+                            if image.get("support") == "threat":
                                 name = image.get("name", default)
 
                                 # If we haven't seen this image before for this vendor
@@ -174,7 +174,7 @@ def generate_manifest(data):
 
                                     qty_release_images += 1
 
-                                    filename = f"kali-linux-{release}-{image.get('image', default)}"
+                                    filename = f"threat-linux-{release}-{image.get('image', default)}"
 
                                     preferred = image.get(
                                         "preferred-image",

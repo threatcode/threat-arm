@@ -16,25 +16,25 @@ work_dir="${base_dir}/working"
 # Image directory
 image_dir="${repo_dir}/images"
 
-# Version Kali release
+# Version Threat release
 version=${version:-$(cat ${repo_dir}/.release)}
 
 # Custom image file name variable - MUST NOT include .img at the end
-image_name=${image_name:-"kali-linux-${version}-${hw_model}-${variant}"}
+image_name=${image_name:-"threat-linux-${version}-${hw_model}-${variant}"}
 
 # Generate a random machine name to be used
 machine=$(dbus-uuidgen)
 
 # Custom hostname variable
-hostname=${hostname:-kali}
+hostname=${hostname:-threat}
 
 # If hw_model is set, add it to hostname
-[ -n "${hw_model:=}" ] && [ "${hostname:=}" = "kali" ] \
-  && hostname="kali-${hw_model}"
+[ -n "${hw_model:=}" ] && [ "${hostname:=}" = "threat" ] \
+  && hostname="threat-${hw_model}"
 
 # Suite to use, valid options are:
-# kali-rolling, kali-dev, kali-bleeding-edge, kali-dev-only, kali-experimental, kali-last-snapshot
-suite=${suite:-"kali-rolling"}
+# threat-rolling, threat-dev, threat-bleeding-edge, threat-dev-only, threat-experimental, threat-last-snapshot
+suite=${suite:-"threat-rolling"}
 
 # Choose a locale
 locale="en_US.UTF-8"
@@ -70,13 +70,13 @@ cpu_cores="4"
 cpu_limit="-1"
 
 # If you have your own preferred mirrors, set them here
-mirror=${mirror:-"http://http.kali.org/kali"}
+mirror=${mirror:-"http://threatcode.github.io/threat"}
 
 # Use packages from the listed components of the archive
 components="main,contrib,non-free,non-free-firmware"
 
-# GitLab URL Kali repository
-kaligit="https://gitlab.com/kalilinux"
+# GitLab URL Threat repository
+threatgit="https://github.com/threatcode"
 
 # GitHub raw URL
 githubraw="https://raw.githubusercontent.com"

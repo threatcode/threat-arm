@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# REF: https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-devices/-/blob/52cbfb36/scripts/generate_images_stats.py
+# REF: https://github.com/threatcode/nethunter/build-scripts/threat-nethunter-devices/-/blob/52cbfb36/scripts/generate_images_stats.py
 import sys
 from datetime import datetime
 
@@ -10,20 +10,20 @@ OUTPUT_FILE = "./kernel-stats.md"
 INPUT_FILE = "./devices.yml"
 
 repo_msg = f"""
-_This table was [generated automatically](https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Kali ARM GitLab repository](https://gitlab.com/kalilinux/build-scripts/kali-arm)_
+_This table was [generated automatically](https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Threat ARM GitLab repository](https://github.com/threatcode/build-scripts/threat-arm)_
 """
 
 qty_kernels = 0
 qty_versions = {
     "custom":  0,
-    "kali":    0,
+    "threat":    0,
     "vendor":  0
 }
 
 # Input:
 # ------------------------------------------------------------
 # See: ./devices.yml
-# https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 
 def yaml_parse(content):
@@ -93,11 +93,11 @@ def write_file(data, file):
     try:
         with open(file, "w") as f:
             meta = "---\n"
-            meta += "title: Kali ARM Kernel Statistics\n"
+            meta += "title: Threat ARM Kernel Statistics\n"
             meta += "---\n\n"
 
-            stats = f"- The official [Kali ARM repository](https://gitlab.com/kalilinux/build-scripts/kali-arm) contains [build-scripts]((https://gitlab.com/kalilinux/build-scripts/kali-arm)) to create [**{qty_kernels}** unique Kali ARM images](images.html)\n"
-            stats += "- [Kali ARM Statistics](index.html)\n\n"
+            stats = f"- The official [Threat ARM repository](https://github.com/threatcode/build-scripts/threat-arm) contains [build-scripts]((https://github.com/threatcode/build-scripts/threat-arm)) to create [**{qty_kernels}** unique Threat ARM images](images.html)\n"
+            stats += "- [Threat ARM Statistics](index.html)\n\n"
 
             f.write(str(meta))
             f.write(str(stats))

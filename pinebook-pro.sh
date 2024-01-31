@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Pinebook Pro (64-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Pinebook Pro (64-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/pinebook-pro/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/pinebook-pro/
 #
 
 # Hardware model
@@ -30,7 +30,7 @@ cat <<EOF >>"${work_dir}"/third-stage
 # We use the one that armbian has in their repository at
 # https://github.com/armbian/firmware/
 # It uses the 43456 files.
-eatmydata apt-get install -y dkms kali-sbc-rockchip linux-image-arm64
+eatmydata apt-get install -y dkms threat-sbc-rockchip linux-image-arm64
 
 status_stage3 'Touchpad settings'
 mkdir -p /etc/X11/xorg.conf.d/
@@ -126,10 +126,10 @@ status "Edit the extlinux.conf file to set root uuid and proper name"
 sed -i -e "0,/root=.*/s//root=UUID=$root_uuid rootfstype=$fstype console=tty1 ro rootwait/g" "${work_dir}"/boot/extlinux/extlinux.conf
 
 # And we remove the "GNU/Linux because we don't use it
-sed -i -e "s|.*GNU/Linux Rolling|menu label Kali Linux|g" "${work_dir}"/boot/extlinux/extlinux.conf
+sed -i -e "s|.*GNU/Linux Rolling|menu label Threat Linux|g" "${work_dir}"/boot/extlinux/extlinux.conf
 
 status "Set the default options in /etc/default/u-boot"
-echo 'U_BOOT_MENU_LABEL="Kali Linux"' >>"${work_dir}"/etc/default/u-boot
+echo 'U_BOOT_MENU_LABEL="Threat Linux"' >>"${work_dir}"/etc/default/u-boot
 echo 'U_BOOT_PARAMETERS="console=tty1 ro rootwait"' >>"${work_dir}"/etc/default/u-boot
 
 status "Rsyncing rootfs into image file"

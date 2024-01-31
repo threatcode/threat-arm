@@ -1,0 +1,85 @@
+name: Device Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Prerequisites
+        run: |
+          pip install -r docs/requirements.txt
+          apt-get update
+          apt-get --yes --no-install-recommends install pandoc
+
+      - name: Linting
+        run: yamllint devices.yml
+
+  generate_documentation:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Prerequisites
+        run: pip install -r docs/requirements.txt
+
+      - name: Setup for HTML
+        run: apt-get update && apt-get --yes --no-install-recommends install install pandoc
+
+      - name: Generate Documentation
+        run: |
+          ./bin/generate_devices_stats.py
+          ./bin/generate_devices_table.py
+          ./bin/generate_images_overview.py
+          ./bin/generate_images_stats.py
+          ./bin/generate_images_table.py
+          ./bin/generate_kernel_stats.py
+          mkdir -pv ./public/
+          cp -v ./docs/404.html   ./public/
+          cp -v ./docs/public.css ./public/
+          pandoc --standalone ./docs/www.md    --css=public.css --include-in-header=./docs/header.html --output=./public/index.html
+          pandoc --standalone ./device-stats.md   --css=public.css --include-in-header=./docs/header.html --output=./public/device-stats.html
+          pandoc --standalone ./devices.md        --css=public.css --include-in-header=./docs/header.html --output=./public/devices.html
+          pandoc --standalone ./image-overview.md --css=public.css --include-in-header=./docs/header.html --output=./public/image-overview.html
+          pandoc --standalone ./image-stats.md    --css=public.css --include-in-header=./docs/header.html --output=./public/image-stats.html
+          pandoc --standalone ./images.md         --css=public.css --include-in-header=./docs/header.html --output=./public/images.html
+          pandoc --standalone ./kernel-stats.md   --css=public.css --include-in-header=./docs/header.html --output=./public/kernel-stats.html
+          find public/ -type f -name '*.html' | sort | while read -r x; do sed 's_<table>_<table id="pretty">_' "${x}" > /tmp/out; mv /tmp/out "${x}"; done
+
+      - name: Display Mirror Result
+        run: echo "Mirror Action Result: ${{ steps.mirror.outputs.result }}"
+
+      - name: Publish Documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: public
+          path: ./public

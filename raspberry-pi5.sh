@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Raspberry Pi 5 (64-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Raspberry Pi 5 (64-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/raspberry-pi-5/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/raspberry-pi-5/
 #
 
 # Hardware model
@@ -72,7 +72,7 @@ cp -rf "${work_dir}"/rpi-firmware/boot/* "${work_dir}"/boot/
 status 'Clone and build kernel'
 git clone --quiet --depth 1 https://github.com/raspberrypi/linux -b rpi-6.1.y "${work_dir}"/usr/src/kernel
 cd "${work_dir}"/usr/src/kernel
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-6.1.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-6.1.patch
 patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/rpi5/0001-net-wireless-brcmfmac-Add-nexmon-support.patch
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)

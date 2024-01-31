@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for NanoPC-T3/T4 (64-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for NanoPC-T3/T4 (64-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/nanopc-t/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/nanopc-t/
 #
 
 # Hardware model
@@ -49,7 +49,7 @@ touch .scmversion
 export ARCH=arm64
 #export CROSS_COMPILE="${base_dir}"/gcc-arm-linux-gnueabihf-4.7/bin/arm-linux-gnueabihf-
 export CROSS_COMPILE=aarch64-linux-gnu-
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-4.4.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-4.4.patch
 make nanopi3_linux_defconfig
 make -j $(grep -c processor /proc/cpuinfo)
 make modules_install INSTALL_MOD_PATH=${work_dir}

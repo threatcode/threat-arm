@@ -28,46 +28,46 @@ else
 
 fi
 
-# Create or modify group kali.
-if ! getent group 'kali'; then
-    groupadd -g 1000 kali || true
+# Create or modify group threat.
+if ! getent group 'threat'; then
+    groupadd -g 1000 threat || true
 
 else
-    groupmod -g 1000 kali || true
+    groupmod -g 1000 threat || true
 
 fi
 
 # Default groups.
-kali_groups="adm,audio,cdrom,dialout,dip,games,input,netdev,plugdev,render,\
-staff,sudo,systemd-journal,users,video,scanner,kali"
+threat_groups="adm,audio,cdrom,dialout,dip,games,input,netdev,plugdev,render,\
+staff,sudo,systemd-journal,users,video,scanner,threat"
 
 # Check that the application groups exist.
 app_groups="wireshark kismet i2c"
 for g in $app_groups; do
     if getent group "$g" >/dev/null; then
-        kali_groups+=",$g"
+        threat_groups+=",$g"
 
     fi
 done
 
-# Add the kali user and give them all the access they need.
-if ! getent passwd 'kali'; then
+# Add the threat user and give them all the access they need.
+if ! getent passwd 'threat'; then
     if [ $(arch) == 'armv6l' ]; then
-        adduser --gecos "" --uid 1000 --gid 1000 --shell /usr/bin/bash --disabled-password kali
+        adduser --gecos "" --uid 1000 --gid 1000 --shell /usr/bin/bash --disabled-password threat
 
     else
-        adduser --gecos "" --uid 1000 --gid 1000 --shell /usr/bin/zsh --disabled-password kali
+        adduser --gecos "" --uid 1000 --gid 1000 --shell /usr/bin/zsh --disabled-password threat
 
     fi
 
-    usermod -a -G "$kali_groups" kali
-    echo 'kali:kali' | chpasswd
+    usermod -a -G "$threat_groups" threat
+    echo 'threat:threat' | chpasswd
 fi
 
 # Parts of XFCE aren't being installed correctly despite existing in /etc/skel
-# So we copy them in here, now that the kali user is created
+# So we copy them in here, now that the threat user is created
 # TODO: make this configurable when we allow users to specify their own user.
-cp -rT /etc/skel /home/kali
+cp -rT /etc/skel /home/threat
 
 # Reload and trigger udev rule
 udevadm control --reload-rules

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for NanoPi2 (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for NanoPi2 (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/nanopi2/
+# More information: https://www.threatcode.github.io/docs/arm/nanopi2/
 #
 
 # Hardware model
@@ -40,7 +40,7 @@ make_image
 
 # We need an older gcc because of kernel age
 cd "${base_dir}"
-git clone --depth 1 https://gitlab.com/kalilinux/packages/gcc-arm-linux-gnueabihf-4-7.git gcc-arm-linux-gnueabihf-4.7
+git clone --depth 1 https://github.com/threatcode/packages/gcc-arm-linux-gnueabihf-4-7.git gcc-arm-linux-gnueabihf-4.7
 
 # Kernel section. If you want to use a custom kernel, or configuration, replace
 # them in this section
@@ -98,7 +98,7 @@ cd ${work_dir}/usr/src/
 git clone https://github.com/friendlyarm/wireless
 cd wireless
 cd backports-4.4.2-1
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-4.4.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-4.4.patch
 cd ..
 #cp ${repo_dir}/kernel-configs/backports.config .config
 #make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j $(grep -c processor /proc/cpuinfo) KLIB_BUILD=${work_dir}/usr/src/kernel KLIB=${work_dir}

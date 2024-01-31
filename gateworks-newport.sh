@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Gateworks Newport (64-bit) - Cavium Octeon
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Gateworks Newport (64-bit) - Cavium Octeon
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/gateworks-newport/
+# More information: https://www.threatcode.github.io/docs/arm/gateworks-newport/
 #
 
 # Hardware model
@@ -58,7 +58,7 @@ cd ${work_dir}/usr/src/kernel
 touch .scmversion
 export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
-patch -p1 <${repo_dir}/patches/kali-wifi-injection-5.4.patch
+patch -p1 <${repo_dir}/patches/threat-wifi-injection-5.4.patch
 patch -p1 <${repo_dir}/patches/0001-wireless-carl9170-Enable-sniffer-mode-promisc-flag-t.patch
 cp ${repo_dir}/kernel-configs/gateworks-newport-5.4.45.config .config
 cp ${repo_dir}/kernel-configs/gateworks-newport-5.4.45.config ${work_dir}/usr/src/gateworks-newport-5.4.45.config
@@ -66,7 +66,7 @@ cp ${repo_dir}/kernel-configs/gateworks-newport-5.4.45.config ${work_dir}/usr/sr
 make -j $(grep -c processor /proc/cpuinfo)
 
 # Install compressed kernel in a kernel.itb
-mkimage -f auto -A arm64 -O linux -T kernel -C gzip -n "Newport Kali Kernel" -a 20080000 -e 20080000 -d arch/arm64/boot/Image.gz kernel.itb
+mkimage -f auto -A arm64 -O linux -T kernel -C gzip -n "Newport Threat Kernel" -a 20080000 -e 20080000 -d arch/arm64/boot/Image.gz kernel.itb
 cp kernel.itb ${work_dir}/boot
 
 # Install kernel modules

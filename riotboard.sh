@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for RIoTboard (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for RIoTboard (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/riotboard/
+# More information: https://www.threatcode.github.io/docs/arm/riotboard/
 #
 
 # Stop on error
@@ -29,14 +29,14 @@ machine=$(
 )
 
 # Custom hostname variable
-hostname=${2:-kali}
+hostname=${2:-threat}
 
 # Custom image file name variable - MUST NOT include .img at the end
-image_name=${3:-kali-linux-$1-riotboard}
+image_name=${3:-threat-linux-$1-riotboard}
 
 # Suite to use, valid options are:
-# kali-rolling, kali-dev, kali-bleeding-edge, kali-dev-only, kali-experimental, kali-last-snapshot
-suite=${suite:-"kali-rolling"}
+# threat-rolling, threat-dev, threat-bleeding-edge, threat-dev-only, threat-experimental, threat-last-snapshot
+suite=${suite:-"threat-rolling"}
 
 # Free space rootfs in MiB
 free_space="300"
@@ -51,10 +51,10 @@ compress="xz"
 fstype="ext3"
 
 # If you have your own preferred mirrors, set them here
-mirror=${mirror:-"http://http.kali.org/kali"}
+mirror=${mirror:-"http://threatcode.github.io/threat"}
 
-# GitLab URL Kali repository
-kaligit="https://gitlab.com/kalilinux"
+# GitLab URL Threat repository
+threatgit="https://github.com/threatcode"
 
 # GitHub raw URL
 githubraw="https://raw.githubusercontent.com"
@@ -62,7 +62,7 @@ githubraw="https://raw.githubusercontent.com"
 # Check EUID=0 you can run any binary as root
 if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root or have super user permissions" >&2
-    echo "Use: sudo $0 ${1:-2.0} ${2:-kali}" >&2
+    echo "Use: sudo $0 ${1:-2.0} ${2:-threat}" >&2
 
     exit 1
 
@@ -70,7 +70,7 @@ fi
 
 # Pass version number
 if [[ $# -eq 0 ]]; then
-    echo "Please pass version number, e.g. $0 2.0, and (if you want) a hostname, default is kali" >&2
+    echo "Please pass version number, e.g. $0 2.0, and (if you want) a hostname, default is threat" >&2
 
     exit 0
 
@@ -79,7 +79,7 @@ fi
 # Check exist bsp directory
 if [ ! -e "bsp" ]; then
     echo "Error: missing bsp directory structure" >&2
-    echo "Please clone the full repository ${kaligit}/build-scripts/kali-arm" >&2
+    echo "Please clone the full repository ${threatgit}/build-scripts/threat-arm" >&2
 
     exit 255
 
@@ -92,7 +92,7 @@ repo_dir="$(pwd)"
 base_dir=${repo_dir}/riot-"$1"
 
 # Working directory
-work_dir="${base_dir}/kali-${architecture}"
+work_dir="${base_dir}/threat-${architecture}"
 
 # Check directory build
 if [ -e "${base_dir}" ]; then
@@ -116,21 +116,21 @@ components="main,contrib,non-free"
 # Don't add the kernel here.  It depends on flash-kernel which in turn will fail
 # when building on amd64, instead we fake a uname/architecture further down and
 # actually install the kernel package after compiling it
-arm="kali-linux-arm ntpdate"
+arm="threat-linux-arm ntpdate"
 
 base="apt-transport-https apt-utils bash-completion console-setup dialog \
 e2fsprogs ifupdown initramfs-tools inxi iw man-db mlocate net-tools \
 netcat-traditional parted pciutils psmisc rfkill screen tmux unrar usbutils \
 vim wget whiptail zerofree"
 
-desktop="kali-desktop-xfce kali-root-login xfonts-terminus xinput \
+desktop="threat-desktop-xfce threat-root-login xfonts-terminus xinput \
 xserver-xorg-video-fbdev"
 
-tools="kali-linux-default"
+tools="threat-linux-default"
 
 services="apache2 atftpd"
 
-extras="alsa-utils bc bison bluez bluez-firmware kali-linux-core \
+extras="alsa-utils bc bison bluez bluez-firmware threat-linux-core \
 libnss-systemd libssl-dev triggerhappy"
 
 packages="${arm} ${base} ${services}"
@@ -170,10 +170,10 @@ fi
 
 # create the rootfs - not much to modify here, except maybe throw in some more packages if you want
 eatmydata debootstrap --foreign \
---keyring=/usr/share/keyrings/kali-archive-keyring.gpg \
---include=kali-archive-keyring,eatmydata \
+--keyring=/usr/share/keyrings/threat-archive-keyring.gpg \
+--include=threat-archive-keyring,eatmydata \
 --components=${components} \
---arch ${architecture} ${suite} ${work_dir} http://http.kali.org/kali
+--arch ${architecture} ${suite} ${work_dir} http://threatcode.github.io/threat
 
 # systemd-nspawn environment
 systemd-nspawn_exec() {
@@ -221,7 +221,7 @@ EOF
 # Set hostname
 echo "${hostname}" >${work_dir}/etc/hostname
 
-# So X doesn't complain, we add kali to hosts
+# So X doesn't complain, we add threat to hosts
 cat <<EOF >${work_dir}/etc/hosts
 127.0.0.1       ${hostname} localhost
 ::1             localhost ip6-localhost ip6-loopback
@@ -278,7 +278,7 @@ int uname(struct utsname *buf)
 {
     int ret;
     ret = syscall(SYS_uname, buf);
-    strcpy(buf->release, "5.7.0-kali1-armmp");
+    strcpy(buf->release, "5.7.0-threat1-armmp");
     strcpy(buf->machine, "armv7l");
     return ret;
 }
@@ -293,7 +293,7 @@ eatmydata apt-get update
 
 eatmydata apt-get -y install binutils ca-certificates console-common git initramfs-tools less locales nano u-boot-tools
 
-# Create kali user with kali password... but first, we need to manually make some groups because they don't yet exist..
+# Create threat user with threat password... but first, we need to manually make some groups because they don't yet exist..
 # This mirrors what we have on a pre-installed VM, until the script works properly to allow end users to set up their own... user
 # However we leave off floppy, because who a) still uses them, and b) attaches them to an SBC!?
 # And since a lot of these have serial devices of some sort, dialout is added as well
@@ -302,10 +302,10 @@ eatmydata apt-get -y install binutils ca-certificates console-common git initram
 groupadd -r -g 118 bluetooth
 groupadd -r -g 113 lpadmin
 groupadd -r -g 122 scanner
-groupadd -g 1000 kali
+groupadd -g 1000 threat
 
-useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,kali -s /bin/bash kali
-echo "kali:kali" | chpasswd
+useradd -m -u 1000 -g 1000 -G sudo,audio,bluetooth,cdrom,dialout,dip,lpadmin,netdev,plugdev,scanner,video,threat -s /bin/bash threat
+echo "threat:threat" | chpasswd
 
 aptops="--allow-change-held-packages -o dpkg::options::=--force-confnew -o Acquire::Retries=3"
 
@@ -443,7 +443,7 @@ cd "${base_dir}"
 #cd "${base_dir}"
 
 # Generate the bootscript so that u-boot knows where everything is..
-#cat << __EOF__ > "${base_dir}"/kali-$architecture/boot/bootscript
+#cat << __EOF__ > "${base_dir}"/threat-$architecture/boot/bootscript
 #fdt_high=0xffffffff
 #initrd_high=0xffffffff
 

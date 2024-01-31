@@ -1,4 +1,4 @@
-# REF: https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-devices/-/blob/master/devices.cfg
+# REF: https://github.com/threatcode/nethunter/build-scripts/threat-nethunter-devices/-/blob/master/devices.cfg
 
 # - vendor:
 #   - board: "device-name"
@@ -17,14 +17,14 @@
 #     storage: ["sdcard", "emmc", "..."]
 #     notes: "anything to mention about the board/device"
 #     images:
-#       - image: "suffix for uncompressed filename: <slug>-<architecture>.img.   prefix is `kali-linux-<version>-`"
+#       - image: "suffix for uncompressed filename: <slug>-<architecture>.img.   prefix is `threat-linux-<version>-`"
 #         name: "human readable string of image for download page/documentation"
 #         architecture: "armel/armhf/arm64"
 #         preferred-image: "true/false - if multiple images, which is preferred"
-#         support: "kali/community/eol"
-#         slug: "what the documentation slug URL is on kali-docs" https://www.kali.org/docs/arm/<slug>/
-#         build-script: "build-script filename.sh" https://gitlab.com/kalilinux/build-scripts/kali-arm/<build-script>
-#         kernel: "custom/kali/vendor"
+#         support: "threat/community/eol"
+#         slug: "what the documentation slug URL is on threat-docs" https://www.threatcode.github.io/docs/arm/<slug>/
+#         build-script: "build-script filename.sh" https://github.com/threatcode/build-scripts/threat-arm/<build-script>
+#         kernel: "custom/threat/vendor"
 #         kernel-version: "output of $(uname -r)"
 #         image-notes: "anything to mention about the image"
 
@@ -52,7 +52,7 @@ devices:
             name: "Raspberry Pi 2, 3, 4 and 400 (32-bit)"
             architecture: "armhf"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-2"
             build-script: "raspberry-pi.sh"
             kernel: "custom"
@@ -63,7 +63,7 @@ devices:
             name: "Raspberry Pi 2 (v1.2), 3, 4 and 400 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-2"
             build-script: "raspberry-pi-64-bit.sh"
             kernel: "custom"
@@ -90,7 +90,7 @@ devices:
             name: "Raspberry Pi 2, 3, 4 and 400 (32-bit)"
             architecture: "armhf"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-3"
             build-script: "raspberry-pi.sh"
             kernel: "custom"
@@ -101,7 +101,7 @@ devices:
             name: "Raspberry Pi 2 (v1.2), 3, 4 and 400 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-3"
             build-script: "raspberry-pi-64-bit.sh"
             kernel: "custom"
@@ -129,7 +129,7 @@ devices:
             name: "Raspberry Pi 2, 3, 4 and 400 (32-bit)"
             architecture: "armhf"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-4"
             build-script: "raspberry-pi.sh"
             kernel: "custom"
@@ -140,7 +140,7 @@ devices:
             name: "Raspberry Pi 2 (v1.2), 3, 4 and 400 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-400"
             build-script: "raspberry-pi-64-bit.sh"
             kernel: "custom"
@@ -167,7 +167,7 @@ devices:
             name: "Raspberry Pi 2, 3, 4 and 400 (32-bit)"
             architecture: "armhf"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-400"
             build-script: "raspberry-pi.sh"
             kernel: "custom"
@@ -178,7 +178,7 @@ devices:
             name: "Raspberry Pi 2 (v1.2), 3, 4 and 400 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-400"
             build-script: "raspberry-pi-64-bit.sh"
             kernel: "custom"
@@ -205,7 +205,7 @@ devices:
             name: "Raspberry Pi 5 (64-bit)"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-5"
             build-script: "raspberry-pi5.sh"
             kernel: "custom"
@@ -232,7 +232,7 @@ devices:
             name: "Raspberry Pi 1 (Original)"
             architecture: "armel"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi"
             kernel: "custom"
             kernel-version: "5.10.103"
@@ -258,7 +258,7 @@ devices:
             name: "Raspberry Pi Zero 2 W"
             architecture: "armhf"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-zero-2-w"
             build-script: "raspberry-pi-zero-2-w.sh"
             kernel: "custom"
@@ -269,7 +269,7 @@ devices:
             name: "Raspberry Pi Zero 2 W (PiTail)"
             architecture: "armhf"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-zero-2-w-pi-tail"
             kernel: "custom"
             kernel-version: "5.10.103"
@@ -295,7 +295,7 @@ devices:
             name: "Raspberry Pi Zero W"
             architecture: "armel"
             preferred-image: "true"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-zero-w"
             build-script: "raspberry-pi-zero-w.sh"
             kernel: "custom"
@@ -306,7 +306,7 @@ devices:
             name: "Raspberry Pi Zero W (PiTail)"
             architecture: "armel"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "raspberry-pi-zero-w-pi-tail"
             build-script: "raspberry-pi-zero-w-pitail.sh"
             kernel: "custom"
@@ -346,11 +346,11 @@ devices:
             name: "Pinebook"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "pinebook"
             build-script: "pinebook.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
       - board: "pinebook-pro"
@@ -375,11 +375,11 @@ devices:
             name: "Pinebook Pro"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "pinebook-pro"
             build-script: "pinebook-pro.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
   - banana:
@@ -406,8 +406,8 @@ devices:
             support: "community"
             slug: "banana-pi"
             build-script: "banana-pi.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
       - board: "banana-pro"
@@ -433,8 +433,8 @@ devices:
             support: "community"
             slug: "banana-pro"
             build-script: "banana-pro.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
   - beagle:
@@ -480,7 +480,7 @@ devices:
         usb2: "1"
         usb3: "1"
         storage: ["sdcard", "usb", "emmc"]
-        notes: "Kali only supports booting from sdcard or usb"
+        notes: "Threat only supports booting from sdcard or usb"
         images:
           - image: "chromebook-exynos-armhf.img"
             name: "Samsung Chromebook 2 13\""
@@ -491,7 +491,7 @@ devices:
             build-script: "chromebook-exynos.sh"
             kernel: "custom"
             kernel-version: "3.8"
-            image-notes: "Kali only supports booting from sdcard or usb"
+            image-notes: "Threat only supports booting from sdcard or usb"
 
       - board: "chromebook-exynos-peach-pit"
         name: "Chromebook Exynos (Samsung Chromebook 2 peach_pit)"
@@ -507,7 +507,7 @@ devices:
         usb2: "1"
         usb3: "1"
         storage: ["sdcard", "usb", "emmc"]
-        notes: "Kali only supports booting from sdcard or usb"
+        notes: "Threat only supports booting from sdcard or usb"
         images:
           - image: "chromebook-exynos-armhf.img"
             name: "Samsung Chromebook 2 11\""
@@ -534,7 +534,7 @@ devices:
         usb2: "2"
         usb3: "0"
         storage: ["sdcard", "usb", "emmc"]
-        notes: "Kali only supports booting from sdcard or usb"
+        notes: "Threat only supports booting from sdcard or usb"
         images:
           - image: "chromebook-exynos-armhf.img"
             name: "Samsung Chromebook"
@@ -561,7 +561,7 @@ devices:
         usb2: "2"
         usb3: "0"
         storage: ["sdcard", "usb", "emmc"]
-        notes: "Kali only supports booting from sdcard or usb"
+        notes: "Threat only supports booting from sdcard or usb"
         images:
           - image: "chromebook-exynos-armhf.img"
             name: "HP Chromebook 11 G1"
@@ -588,7 +588,7 @@ devices:
         usb2: "0"
         usb3: "2"
         storage: ["sdcard", "usb", "emmc"]
-        notes: "Kali only supports booting from sdcard or usb"
+        notes: "Threat only supports booting from sdcard or usb"
         images:
           - image: "chromebook-nyan-armhf.img"
             name: "Acer Chromebook 13 (CB5-311)"
@@ -615,7 +615,7 @@ devices:
         usb2: "2"
         usb3: "0"
         storage: ["sdcard", "emmc", "usb"]
-        notes: "Kali only supports booting from sdcard or usb.
+        notes: "Threat only supports booting from sdcard or usb.
                 eMMC is 16GB"
         images:
           - image: "chromebook-veyron-armhf.img"
@@ -654,8 +654,8 @@ devices:
             support: "community"
             slug: "trimslice"
             build-script: "trimslice.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
       - board: "utilite-pro"
@@ -793,8 +793,8 @@ devices:
             support: "community"
             slug: "cubox-i4pro"
             build-script: "cubox-i4pro.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
   - gateworks:
@@ -820,7 +820,7 @@ devices:
             name: "Gateworks Newport"
             architecture: "arm64"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "gateworks-newport"
             build-script: "gateworks-newport.sh"
             kernel: "vendor"
@@ -847,7 +847,7 @@ devices:
             name: "Gateworks Ventana"
             architecture: "armhf"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "gateworks-ventana"
             build-script: "gateworks-ventana.sh"
             kernel: "vendor"
@@ -1036,8 +1036,8 @@ devices:
             support: "community"
             slug: "nanopi-neo-plus2"
             build-script: "nanopi-neo-plus2.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
       - board: "nanopi2"
@@ -1199,8 +1199,8 @@ devices:
             support: "community"
             slug: "odroid-c2"
             build-script: "odroid-c2.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
       - board: "odroid-u2"
@@ -1420,8 +1420,8 @@ devices:
             support: "community"
             slug: "riotboard"
             build-script: "riotboard.sh"
-            kernel: "kali"
-            kernel-version: "5.18.0-kali1-arm64"
+            kernel: "threat"
+            kernel-version: "5.18.0-threat1-arm64"
             image-notes: ""
 
   - radxa:
@@ -1513,7 +1513,7 @@ devices:
             name: "USBArmory MKII"
             architecture: "armhf"
             preferred-image: "false"
-            support: "kali"
+            support: "threat"
             slug: "usb-armory-mkii"
             build-script: "usb-armory-mkii.sh"
             kernel: "vendor"

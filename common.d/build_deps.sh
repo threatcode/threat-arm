@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script (host machine preparation)
-# https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script (host machine preparation)
+# https://github.com/threatcode/build-scripts/threat-arm
 #
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -100,7 +100,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 
 else
-    echo -e "\n[i] Kali-ARM build-script machine preparation"
+    echo -e "\n[i] Threat-ARM build-script machine preparation"
 
 fi
 
@@ -151,19 +151,19 @@ if dpkg --compare-versions "$debootstrap_ver" lt "1.0.105"; then
 
 fi
 
-# Install kali-archive-keyring
-if [ ! -f /usr/share/keyrings/kali-archive-keyring.gpg ]; then
-    echo -e "\n[i] Installing: kali-archive-keyring"
+# Install threat-archive-keyring
+if [ ! -f /usr/share/keyrings/threat-archive-keyring.gpg ]; then
+    echo -e "\n[i] Installing: threat-archive-keyring"
     temp_key="$(mktemp -d)"
-    git clone https://gitlab.com/kalilinux/packages/kali-archive-keyring.git $temp_key
+    git clone https://github.com/threatcode/packages/threat-archive-keyring.git $temp_key
     cd $temp_key/
     make
-    cp -v kali-archive-keyring.gpg /usr/share/keyrings/ #make install
+    cp -v threat-archive-keyring.gpg /usr/share/keyrings/ #make install
     cd $OLDPWD/
     rm -rf $temp_key
 
 else
-    echo -e "\n[i] Already have: kali-archive-keyring"
+    echo -e "\n[i] Already have: threat-archive-keyring"
 
 fi
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Every Kali ARM image starts with this
+# Every Threat ARM image starts with this
 #
 
 # shellcheck disable=SC2154
@@ -32,7 +32,7 @@ source ./common.d/check.sh
 include packages
 
 # Execute initial debootstrap
-debootstrap_exec http://http.kali.org/kali
+debootstrap_exec http://threatcode.github.io/threat
 
 # Define sources.list
 sources_list

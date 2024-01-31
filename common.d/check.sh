@@ -27,11 +27,11 @@ if [ ! -e /usr/bin/qemu-aarch64-static ]; then
 
 fi
 
-# Check for the kali archive keyring
-if [ ! -e /usr/share/keyrings/kali-archive-keyring.gpg ]; then
-    log "Error: missing kali-archive-keyring" red
+# Check for the threat archive keyring
+if [ ! -e /usr/share/keyrings/threat-archive-keyring.gpg ]; then
+    log "Error: missing threat-archive-keyring" red
     log "Please download the latest version from" red
-    log "https://kali.download/kali/pool/main/k/kali-archive-keyring" red
+    log "https://threat.download/threat/pool/main/k/threat-archive-keyring" red
     log "and install it manually." red
 
     exit 1
@@ -41,7 +41,7 @@ fi
 # Check exist bsp directory.
 if [ ! -e "bsp" ]; then
     log "Error: missing bsp directory structure" red
-    log "Please clone the full repository ${kaligit}/build-scripts/kali-arm" green
+    log "Please clone the full repository ${threatgit}/build-scripts/threat-arm" green
 
     exit 255
 

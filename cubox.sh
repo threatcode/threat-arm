@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for CuBox (32-bit) - Original Marvell based NOT Freescale based
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for CuBox (32-bit) - Original Marvell based NOT Freescale based
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/cubox/
+# More information: https://www.threatcode.github.io/docs/arm/cubox/
 #
 
 # Hardware model
@@ -31,7 +31,7 @@ include clean_system
 
 # We need an older cross compiler due to kernel age
 cd "${base_dir}"
-git clone --depth 1 https://gitlab.com/kalilinux/packages/gcc-arm-linux-gnueabihf-4-7.git gcc-arm-linux-gnueabihf-4.7
+git clone --depth 1 https://github.com/threatcode/packages/gcc-arm-linux-gnueabihf-4-7.git gcc-arm-linux-gnueabihf-4.7
 
 # Kernel section. If you want to use a custom kernel, or configuration, replace
 # them in this section

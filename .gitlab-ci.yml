@@ -1,4 +1,4 @@
-# REF: https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-devices/-/blob/cf3ca7ae/.gitlab-ci.yml
+# REF: https://github.com/threatcode/nethunter/build-scripts/threat-nethunter-devices/-/blob/cf3ca7ae/.gitlab-ci.yml
 
 ## Docker image: https://hub.docker.com/_/python
 image: docker.io/python:3.7
@@ -16,7 +16,7 @@ variables:
 
 .setup_for_html: &setup_for_html |
   apt-get update
-  apt-get -y install pandoc
+  apt-get --yes --no-install-recommends install install pandoc
 
 linting:
   stage: linting

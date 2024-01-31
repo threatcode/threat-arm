@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for OrangePi 5 Plus (64-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for OrangePi 5 Plus (64-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
 # This is a community script - you will need to generate your own image to use
-# More information: https://www.kali.org/docs/arm/orangepi-5plus/
+# More information: https://www.threatcode.github.io/docs/arm/orangepi-5plus/
 #
 
 # Hardware model
@@ -26,7 +26,7 @@ add_interface eth1
 
 # Third stage
 cat <<EOF >>"${work_dir}"/third-stage
-status_stage3 'Install kali-sbc package'
+status_stage3 'Install threat-sbc package'
 eatmydata apt-get install -y u-boot-menu u-boot-tools
 
 # We need "file" for the kernel scripts we run, and it won't be installed if you pass --slim
@@ -134,14 +134,14 @@ status "Edit the extlinux.conf file to set root uuid and proper name"
 # We do this down here because we don't know the UUID until after the image is created
 sed -i -e "0,/append.*/s//append root=UUID=$(blkid -s UUID -o value ${rootp}) rootfstype=$fstype earlyprintk console=ttyS0,115200 console=tty1 console=both swiotlb=1 coherent_pool=1m ro rootwait/g" ${work_dir}/boot/extlinux/extlinux.conf
 # And we remove the "GNU/Linux because we don't use it
-sed -i -e "s|.*GNU/Linux Rolling|menu label Kali Linux|g" ${work_dir}/boot/extlinux/extlinux.conf
+sed -i -e "s|.*GNU/Linux Rolling|menu label Threat Linux|g" ${work_dir}/boot/extlinux/extlinux.conf
 
 # And we need to edit the /etc/kernel/cmdline file as well
 status "Edit cmdline"
 sed -i -e "s/root=UUID=.*/root=UUID=$(blkid -s UUID -o value ${rootp})/" ${work_dir}/etc/kernel/cmdline
 
 status "Set the default options in /etc/default/u-boot"
-echo 'U_BOOT_MENU_LABEL="Kali Linux"' >>${work_dir}/etc/default/u-boot
+echo 'U_BOOT_MENU_LABEL="Threat Linux"' >>${work_dir}/etc/default/u-boot
 echo 'U_BOOT_PARAMETERS="earlyprintk console=ttyAML0,115200 console=tty1 console=both swiotlb=1 coherent_pool=1m ro rootwait"' >>${work_dir}/etc/default/u-boot
 
 status "Rsyncing rootfs into image file"

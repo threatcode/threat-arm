@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for ODROID-XU3 (32-bit)
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for ODROID-XU3 (32-bit)
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/odroid-xu3/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/odroid-xu3/
 #
 
 # Hardware model
@@ -64,7 +64,7 @@ status "Kernel stuff"
 git clone --depth 1 -b odroidxu4-4.14.y https://github.com/hardkernel/linux.git ${work_dir}/usr/src/kernel
 cd ${work_dir}/usr/src/kernel
 git rev-parse HEAD >${work_dir}/usr/src/kernel-at-commit
-patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/kali-wifi-injection-4.14.patch
+patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/threat-wifi-injection-4.14.patch
 patch -p1 --no-backup-if-mismatch <${repo_dir}/patches/0001-wireless-carl9170-Enable-sniffer-mode-promisc-flag-t.patch
 touch .scmversion
 export ARCH=arm

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Kali Linux ARM build-script for Gateworks Ventana (32-bit) - Freescale based
-# Source: https://gitlab.com/kalilinux/build-scripts/kali-arm
+# Threat Linux ARM build-script for Gateworks Ventana (32-bit) - Freescale based
+# Source: https://github.com/threatcode/build-scripts/threat-arm
 #
-# This is a supported device - which you can find pre-generated images on: https://www.kali.org/get-kali/
-# More information: https://www.kali.org/docs/arm/gateworks-ventana/
+# This is a supported device - which you can find pre-generated images on: https://www.threatcode.github.io/get-threat/
+# More information: https://www.threatcode.github.io/docs/arm/gateworks-ventana/
 #
 
 # Hardware model
@@ -87,7 +87,7 @@ cd ${work_dir}/usr/src/kernel
 touch .scmversion
 export ARCH=arm
 export CROSS_COMPILE=arm-linux-gnueabihf- mrproper
-patch -p1 <${repo_dir}/patches/veyron/4.19/kali-wifi-injection.patch
+patch -p1 <${repo_dir}/patches/veyron/4.19/threat-wifi-injection.patch
 patch -p1 <${repo_dir}/patches/veyron/4.19/wireless-carl9170-Enable-sniffer-mode-promisc-flag-t.patch
 
 # Remove redundant YYLOC global declaration

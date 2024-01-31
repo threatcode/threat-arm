@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-# ARM Devices ~ https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# ARM Devices ~ https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 ###############################################
-# Script to prepare the rpi-imager json script for Kali ARM quarterly releases.
+# Script to prepare the rpi-imager json script for Threat ARM quarterly releases.
 # Based on ./bin/pre-release.py
 #
 # This should be run after images are created.
@@ -52,7 +52,7 @@ file_ext = [
 # Input:
 # ------------------------------------------------------------
 # See: ./devices.yml
-# https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 #
 # See:  ./images/*.img.sha256sum (uncompressed image sha256sum - to get the sha256sum
 #       ./images/*.img.xz.sha256sum (compressed image sha256sum - to get the sha256sum
@@ -140,10 +140,10 @@ def jsonarray(devices, vendor, name, url, extract_size, extract_sha256, image_do
 
     jsondata = {
         "name": name,
-        "description": f"Kali Linux ARM image for the {name}",
+        "description": f"Threat Linux ARM image for the {name}",
         "url": url,
-        "icon": "https://www.kali.org/images/kali-linux-logo.svg",
-        "website": "https://www.kali.org/",
+        "icon": "https://www.threatcode.github.io/images/threat-linux-logo.svg",
+        "website": "https://www.threatcode.github.io/",
         "release_date": datetime.datetime.today().strftime("%Y-%m-%d"),
         "extract_size": extract_size,
         "extract_sha256": extract_sha256,
@@ -189,7 +189,7 @@ def generate_manifest(data):
                             qty_images += 1
 
                             # Check that it's not EOL or community supported
-                            if image.get("support") == "kali":
+                            if image.get("support") == "threat":
                                 name = image.get("name", default)
 
                                 # If we haven't seen this image before for this vendor
@@ -197,7 +197,7 @@ def generate_manifest(data):
                                     img_seen.add(name)
                                     qty_release_images += 1
 
-                                    filename = f"kali-linux-{release}-{image.get('image', default)}"
+                                    filename = f"threat-linux-{release}-{image.get('image', default)}"
 
                                     # Check to make sure files got created
                                     for ext in file_ext:
@@ -213,7 +213,7 @@ def generate_manifest(data):
                                     with open(f"{imagedir}/{filename}.sha256sum") as f:
                                         extract_sha256 = f.read().split()[0]
 
-                                    url = f"https://kali.download/arm-images/kali-{release}/{filename}.xz"
+                                    url = f"https://threat.download/arm-images/threat-{release}/{filename}.xz"
 
                                     if "arm64" in image.get("architecture", default):
                                         arch = "64bit"

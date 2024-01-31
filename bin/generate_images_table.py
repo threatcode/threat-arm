@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# REF: https://gitlab.com/kalilinux/nethunter/build-scripts/kali-nethunter-devices/-/blob/95ad7d2b/scripts/generate_images_table.py
+# REF: https://github.com/threatcode/nethunter/build-scripts/threat-nethunter-devices/-/blob/95ad7d2b/scripts/generate_images_table.py
 import sys
 from datetime import datetime
 
@@ -10,7 +10,7 @@ OUTPUT_FILE = "./images.md"
 INPUT_FILE = "./devices.yml"
 
 repo_msg = f"""
-_This table was [generated automatically](https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Kali ARM GitLab repository](https://gitlab.com/kalilinux/build-scripts/kali-arm)_
+_This table was [generated automatically](https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml) on {datetime.now().strftime('%Y-%B-%d %H:%M:%S')} from the [Threat ARM GitLab repository](https://github.com/threatcode/build-scripts/threat-arm)_
 """
 
 qty_devices = 0
@@ -20,7 +20,7 @@ qty_images_released = 0
 # Input:
 # ------------------------------------------------------------
 # See: ./devices.yml
-# https://gitlab.com/kalilinux/build-scripts/kali-arm/-/blob/master/devices.yml
+# https://github.com/threatcode/build-scripts/threat-arm/-/blob/master/devices.yml
 
 
 def yaml_parse(content):
@@ -43,7 +43,7 @@ def generate_table(data):
 
     default = ""
 
-    table = "| Image Name | Filename | Architecture | Preferred | Support | [Documentation](https://www.kali.org/docs/arm/) | [Kernel](kernel-stats.html) | Kernel Version | Notes |\n"
+    table = "| Image Name | Filename | Architecture | Preferred | Support | [Documentation](https://www.threatcode.github.io/docs/arm/) | [Kernel](kernel-stats.html) | Kernel Version | Notes |\n"
     table += "|------------|----------|--------------|-----------|---------|-------------------------------------------------|-----------------------|----------------|-------|\n"
 
     # Iterate over per input (depth 1)
@@ -65,7 +65,7 @@ def generate_table(data):
 
                             support = image.get("support", default)
 
-                            if support == "kali":
+                            if support == "threat":
                                 #qty_images_released += 1
                                 images_released.append(
                                     f"{image.get('name', default)}")
@@ -73,7 +73,7 @@ def generate_table(data):
                             slug = image.get("slug", default)
 
                             if slug:
-                                slug = f"[{slug}](https://www.kali.org/docs/arm/{slug}/)"
+                                slug = f"[{slug}](https://www.threatcode.github.io/docs/arm/{slug}/)"
 
                             table += f"| {image.get('name', default)} | {image.get('image', default)} | {image.get('architecture', default)} | {image.get('preferred-image', default)} | {image.get('support', default)} | {slug} | {image.get('kernel', default)} | {image.get('kernel-version', default)} | {image.get('image-notes', default)} |\n"
 
@@ -102,12 +102,12 @@ def write_file(data, file):
     try:
         with open(file, "w") as f:
             meta = "---\n"
-            meta += "title: Kali ARM Images\n"
+            meta += "title: Threat ARM Images\n"
             meta += "---\n\n"
 
-            stats = f"- The official [Kali ARM repository](https://gitlab.com/kalilinux/build-scripts/kali-arm) contains [build-scripts]((https://gitlab.com/kalilinux/build-scripts/kali-arm)) to create [**{qty_images}** unique Kali ARM images](image-stats.html) for **{qty_devices}** devices\n"
-            stats += f"- The [next release](https://www.kali.org/releases/) cycle will include [**{qty_images_released}** Kali ARM images](image-stats.html) _([ready to download](https://www.kali.org/get-kali/#kali-arm))_\n"
-            stats += "- [Kali ARM Statistics](index.html)\n\n"
+            stats = f"- The official [Threat ARM repository](https://github.com/threatcode/build-scripts/threat-arm) contains [build-scripts]((https://github.com/threatcode/build-scripts/threat-arm)) to create [**{qty_images}** unique Threat ARM images](image-stats.html) for **{qty_devices}** devices\n"
+            stats += f"- The [next release](https://www.threatcode.github.io/releases/) cycle will include [**{qty_images_released}** Threat ARM images](image-stats.html) _([ready to download](https://www.threatcode.github.io/get-threat/#threat-arm))_\n"
+            stats += "- [Threat ARM Statistics](index.html)\n\n"
 
             f.write(str(meta))
             f.write(str(stats))
