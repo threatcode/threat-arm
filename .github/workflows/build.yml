@@ -27,10 +27,8 @@ jobs:
 
       - name: Install Prerequisites
         run: |
-          pip install -r docs/requirements.txt
-          apt-get update
-          apt-get --yes --no-install-recommends install yamllint pandoc
-
+          docker run -v $PWD:/workspace -w /workspace docker.io/python:3.7 /bin/bash -c "pip install -r docs/requirements.txt && pip install yamllint"
+      
       - name: Linting
         run: yamllint devices.yml
 
